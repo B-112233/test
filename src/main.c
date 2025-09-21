@@ -7,72 +7,27 @@
 int qtis;
 char flag = 0;
 
-typedef enum {
-	CARRY_IDLE = 0,
-	CARRY_FIND_OBJECT,
-	CARRY_PICKED,
-	CARRY_RETURNING,
-	CARRY_DROPPING,
-	CARRY_DONE
-} CarryState;
 
 void main(void)
 {
-	unsigned char record=0 + 2,j=0,ji_shu=0,angle=0;	 //recordָСתj,ji_shuڼangleڼ¼Ƕȡ
+	unsigned char record=0 + 2,j=0,ji_shu=0,angle=0;
 	char ii = 0;
-	unsigned int dis = 0;
-	CarryState carry = CARRY_IDLE;
-
-	uart_Init();
-	InitTimer();
-	delay_nms(2000);   //ʱ2
+	delay_nms(2000);
 	Fast_forward(40);
 	while(1)
 	{
-		// 简易搬运流程状态机
-		if(carry != CARRY_DONE)
+		P0=0x0f;		//检测黑线															 
+		qtis=P0&0x0f;	//读取4个巡线传感器的值
+		Fast_forward(1);//前进一小步
+		switch(qtis)	//按照4个巡线传感器的值执行移动指令，巡线
 		{
-			dis = GetSonarDis();
-			// 目标阈值按HC-SR04约每cm≈58计数，阈值20cm
-			if(carry == CARRY_IDLE)
-			{
-				if(dis > 0 && dis < 20)
-				{
-					stop();
-					// 模拟抓取（实际应控制夹爪IO）
-					delay_nms(500);
-					turn_back();
-					carry = CARRY_RETURNING;
-					continue;
-				}
-			}
-			else if(carry == CARRY_RETURNING)
-			{
-				// 返回过程中，检测到新的障碍物作为放置点
-				if(dis > 0 && dis < 25)
-				{
-					stop();
-					// 模拟放置
-					delay_nms(500);
-					carry = CARRY_DONE;
-					stop();
-					break;
-				}
-			}
-		}
+			case 1:turn(1550,1550);break;	  //大幅向右转
+			case 2: 	 
+			case 3:turn(1550,1500);break;	  //小幅向右转
 
-		P0=0x0f;		//								 
-		qtis=P0&0x0f;	//ȡ4Ѳߴֵ
-		Fast_forward(1);//ǰһС
-		switch(qtis)	//4ѲߴִֵƶָѲ
-		{
-			case 1:turn(1550,1550);break;	  //ת
-			case 2:	 
-			case 3:turn(1550,1500);break;	  //Сת
-
-			case 8:turn(1450,1450);break;	  //ת
-			case 4:turn(1500, 1480); break;   //Сת
-			case 12:turn(1500,1450);break;	  //Сת
+			case 8:turn(1450,1450);break;	  //大幅向左转
+			case 4:turn(1500, 1480); break;   //小幅向左转
+			case 12:turn(1500,1450);break;	  //小幅向左转
 
 			case 5:
 			case 6:
@@ -80,7 +35,7 @@ void main(void)
 			case 10:
 			case 13:
 			case 14:
-			case 15:Fast_forward(6);break;	  //ǰ2С			
+			case 15:Fast_forward(6);break; 	  //向前2小步			
 		}
 		
 		if(qtis==15)					  //4Ѳߴĺ,ĵ
