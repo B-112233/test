@@ -10,7 +10,7 @@ char flag = 0;
 
 void main(void)
 {
-	unsigned char record=0 + 2,j=0,ji_shu=0,angle=0;
+	unsigned char record=0,j=0,ji_shu=0,angle=0;
 	char ii = 0;
 	delay_nms(2000);
 	Fast_forward(40);
