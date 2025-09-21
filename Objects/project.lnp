@@ -1,0 +1,8 @@
+".\Objects\boebot.obj",
+".\Objects\motor.obj",
+".\Objects\uart.obj",
+".\Objects\ultrasonic.obj",
+".\Objects\main.obj" 
+TO ".\Objects\project" 
+PRINT(".\Listings\project.m51") RAMSIZE(256) 
+DISABLEWARNING (16) 

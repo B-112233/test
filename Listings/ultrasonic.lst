@@ -1,0 +1,83 @@
+C51 COMPILER V9.54   ULTRASONIC                                                            09/17/2025 21:35:12 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE ULTRASONIC
+OBJECT MODULE PLACED IN .\Objects\ultrasonic.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE Hardware\ultrasonic.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\System;.\src;.\Har
+                    -dware) DEBUG OBJECTEXTEND PRINT(.\Listings\ultrasonic.lst) OBJECT(.\Objects\ultrasonic.obj)
+
+line level    source
+
+   1          #include <AT89X52.h>
+   2          #include <uart.h>
+   3          #include <stdio.h>
+   4          #include <Boebot.h>
+   5          
+   6          #define TrigL P2_6       //左超声波触发信号
+   7          #define EchoL P2_7       //左超声波echo引脚信号
+   8          
+   9          #define uchar unsigned char
+  10          #define uint  unsigned int
+  11          
+  12          uchar timer_cnt=0;      // 记录进定时器中断次数
+  13          uint sonar_used_time=0;
+  14          /***********************************************************************/
+  15          // 定时器初始化
+  16          /***********************************************************************/
+  17          void InitTimer(void)
+  18          {
+  19   1              TMOD |= 0x01;
+  20   1          TH0 = 0x0;
+  21   1          TL0 = 0x0;
+  22   1          EA = 1;
+  23   1          ET0 = 1;
+  24   1          TR0 = 0;
+  25   1      }
+  26          /*
+  27                  定时器0溢出中断
+  28          */
+  29          void Interrupt(void) interrupt 1
+  30          {
+  31   1              TR0 = 0;
+  32   1      }
+  33          /***********************************************************************/
+  34          // 测距函数
+  35          // 参数：pos时为超声波装置位置L、F、R分别代表左前右位置
+  36          /***********************************************************************/
+  37          
+  38          unsigned int GetSonarDis(void)
+  39          {
+  40   1              uint dis=0; 
+  41   1              uint high, low;
+  42   1              TrigL=0;EchoL=0;  //各I/O口置低
+  43   1      
+  44   1              TrigL=1;        //trig置高 发出10us的高电平信号 
+  45   1              delay_nus(25);   
+  46   1              TrigL=0;
+  47   1              while(EchoL == 0);
+  48   1              TR0=1;    
+  49   1              //开启定时器开始计时
+  50   1              while(EchoL == 1 && TR0 == 1);   //等待echo置低
+  51   1              TR0 = 0;
+  52   1              high = TH0 * 256;
+  53   1              low = TL0;
+  54   1              dis = (high + low) / 58;
+C51 COMPILER V9.54   ULTRASONIC                                                            09/17/2025 21:35:12 PAGE 2   
+
+  55   1      
+  56   1              return dis;
+  57   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     74    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
