@@ -1,4 +1,4 @@
-#include <AT89X52.H>     //����52ͷ�ļ�
+#include <AT89X52.H>     
 #include <Boebot.h>
 #include "motor.h"
 #include "uart.h"
@@ -38,12 +38,12 @@ void main(void)
 			case 15:Fast_forward(6);break; 	  //向前2小步			
 		}
 		
-		if(qtis==15)					  //4Ѳߴĺ,ĵ
+		if(qtis==15)					  
 		{						  
-			record++;					//ָӱ
+			record++;					
 			if(record%2==0 && record>0)
 				flag=0;
-			switch(record)				  //ձִֵƶ
+			switch(record)				
 			{
 				case 1:Fast_forward(12);turn_left_90();break;		//第一次到中心点左转90
 				case 2:Fast_forward(15);turn_right_90();break;
