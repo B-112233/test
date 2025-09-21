@@ -45,24 +45,24 @@ void main(void)
 				flag=0;
 			switch(record)				  //ձִֵƶ
 			{
-				case 1:Fast_forward(12);turn_left_90();break;  //ת90
-				case 2:Fast_forward(15);turn_right_90();break; //ת90
-				case 3:Fast_forward(15);turn_left_45();break;  //ǰ20ת45
-				case 4:Fast_forward(20);turn_right_45();break;	//ǰ30ת45ȣǰ15
+				case 1:Fast_forward(12);turn_left_90();break;		//第一次到中心点左转90
+				case 2:Fast_forward(15);turn_right_90();break;
+				case 3:Fast_forward(15);turn_left_45();break;
+				case 4:Fast_forward(20);turn_right_45();break;	
 				case 5:Fast_forward(15);break;
 				case 6:Fast_forward(15);break;
-				case 7:Fast_forward(15);turn_right_45();break;	   	   //ǰ20ת45ȡ
-				case 8:Fast_forward(18);turn_left_45();break; //ǰ20ת45ȣǰ13
-				case 9:Fast_forward(15);turn_right_90();break;		 //ת90
-				case 10:Fast_forward(15);turn_left_90();break;		 //ת90
+				case 7:Fast_forward(15);turn_right_45();break;   	   
+				case 8:Fast_forward(18);turn_left_45();break;
+				case 9:Fast_forward(15);turn_right_90();break;		 
+				case 10:Fast_forward(15);turn_left_90();break;
 			}
-			ii=0;				//ii
+			ii=0;
 		}
 		
-		if(record%2==0 && record>0 && flag==0)//ָӱֵΪżҷʱִ䡣
+		if(record%2==0 && record>0 && flag==0)
 		{
 			ii++;	 
-			if(ii>30-j*5)				//62С鰲ŵλһļ? 
+			if(ii>30-j*5) 
 			{
 				back(30);//32
 				turn_back();
@@ -72,7 +72,7 @@ void main(void)
 			}
 		}
 		
-		if(record%2==1)		//С⵽׵㣬ȡת
+		if(record%2==1)		
 		{
 			if(qtis==0)
 				ii++;	 
@@ -82,7 +82,7 @@ void main(void)
 				 ii=0;
 			}															   
 		}
-		if(record==10)					 //ھŴ4Ѳߴ⵽ߣǰ26ת90ȡ
+		if(record==10)				
 		{
 			//		Fast_forward(10);
 			//		turn_right_90();
