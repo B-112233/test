@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  09/19/2025 21:42:36 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -8,110 +8,159 @@ COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE src\main.c OPTIMIZE(8,SPEED) BROWS
 
 line level    source
 
-   1          #include <AT89X52.H>     //∞¸∫¨52Õ∑Œƒº˛
+   1          #include <AT89X52.H>     
    2          #include <Boebot.h>
    3          #include "motor.h"
    4          #include "uart.h"
    5          #include "ultrasonic.h"
    6          
    7          int qtis;
-   8          char flag = 0;
+   8          char flag = 0, flag_t = 1;
    9          
-  10          void main(void)
-  11          {
-  12   1              unsigned char record=0 + 2,j=0,ji_shu=0,angle=0;         //±‰¡ørecord÷∏ª”–°≥µ◊™Õ‰«Èøˆ£¨j,ji_shu”√”⁄º∆ ˝£¨angle”√
-             -”⁄º«¬ºΩ«∂»°£
-  13   1              char ii = 0;
-  14   1              delay_nms(2000);   //—” ±2√Î
-  15   1              Fast_forward(40);
-  16   1              while(1)
-  17   1              {
-  18   2                      P0=0x0f;                //ºÏ≤‚∫⁄œﬂ                                                                                                                       
-  19   2                      qtis=P0&0x0f;   //∂¡»°4∏ˆ—≤œﬂ¥´∏–∆˜µƒ÷µ
-  20   2                      Fast_forward(1);//«∞Ω¯“ª–°≤Ω
-  21   2                      switch(qtis)    //∞¥’’4∏ˆ—≤œﬂ¥´∏–∆˜µƒ÷µ÷¥––“∆∂Ø÷∏¡Ó£¨—≤œﬂ
-  22   2                      {
-  23   3                              case 1:turn(1550,1550);break;     //¥Û∑˘œÚ”“◊™
-  24   3                              case 2:          
-  25   3                              case 3:turn(1550,1500);break;     //–°∑˘œÚ”“◊™
-  26   3      
-  27   3                              case 8:turn(1450,1450);break;     //¥Û∑˘œÚ◊Û◊™
-  28   3                              case 4:turn(1500, 1480); break;   //–°∑˘œÚ◊Û◊™
-  29   3                              case 12:turn(1500,1450);break;    //–°∑˘œÚ◊Û◊™
-  30   3      
-  31   3                              case 5:
-  32   3                              case 6:
-  33   3                              case 7:
-  34   3                              case 10:
-  35   3                              case 13:
-  36   3                              case 14:
-  37   3                              case 15:Fast_forward(6);break;    //œÚ«∞2–°≤Ω                   
-  38   3                      }
-  39   2                      
-  40   2                      if(qtis==15)                                              //4∏ˆ—≤œﬂ¥´∏–∆˜∂ººÏ≤‚µƒ∫⁄œﬂ,π˝÷––ƒµ„
-  41   2                      {                                                                         
-  42   3                              record++;                                                       //÷∏ª”±‰¡ø◊‘‘ˆ
-  43   3                              if(record%2==0 && record>0)
-  44   3                                      flag=0;
-  45   3                              switch(record)                                    //∞¥’’±‰¡øµƒ÷µ÷¥––“∆∂Ø√¸¡Ó
-  46   3                              {
-  47   4                                      case 1:Fast_forward(12);turn_left_90();break;  //◊Û◊™90∂»
-  48   4                                      case 2:Fast_forward(15);turn_right_90();break; //”“◊™90∂»
-  49   4                                      case 3:Fast_forward(15);turn_left_45();break;  //«∞Ω¯20≤Ω£¨‘Ÿ◊Û◊™45∂»
-  50   4                                      case 4:Fast_forward(20);turn_right_45();break;  //«∞Ω¯30≤Ω£¨‘Ÿ”“◊™45∂»£¨‘Ÿ«∞Ω¯15≤Ω°£
-  51   4                                      case 5:Fast_forward(15);break;
-  52   4                                      case 6:Fast_forward(15);break;
-  53   4                                      case 7:Fast_forward(15);turn_right_45();break;             //«∞Ω¯20≤Ω£¨‘Ÿ”“◊™45∂»°£
-C51 COMPILER V9.54   MAIN                                                                  09/19/2025 21:42:36 PAGE 2   
+  10          
+  11          void main(void)
+  12          {
+  13   1              unsigned char record=0, j=0,ji_shu=0,angle=0;
+  14   1              char ii = 0;
+  15   1              unsigned int dis;
+  16   1              uart_Init();
+  17   1      
+  18   1              // delay_nms(2000);
+  19   1              // Fast_forward(40);
+  20   1              while(1)
+  21   1              {
+  22   2                      InitTimer();            //ÁªôË∂ÖÂ£∞Ê≥¢ËÆ°Êó∂
+  23   2                      dis = GetSonarDis();
+  24   2      
+  25   2                      //ÊµãËØïË∂ÖÂ£∞Ê≥¢
+  26   2                      // printf("ultrasonic = %d\n", dis);
+  27   2                      // delay_nms(1000);
+  28   2      
+  29   2                      /*Á¨¨‰∏ÄÈò∂ÊÆµ ÊääÁâ©ÂùóÊê¨ÂõûÁºìÂÜ≤Âå∫*/
+  30   2                      P0=0x0f;                //Ê£ÄÊµãÈªëÁ∫ø                                                                                                                   
+  31   2                      qtis=P0&0x0f;   //ËØªÂèñ4‰∏™Â∑°Á∫ø‰º†ÊÑüÂô®ÁöÑÂÄº
+  32   2                      Fast_forward(1);//ÂâçËøõ‰∏ÄÂ∞èÊ≠•
+  33   2                      switch(qtis)    //ÊåâÁÖß4‰∏™Â∑°Á∫ø‰º†ÊÑüÂô®ÁöÑÂÄºÊâßË°åÁßªÂä®Êåá‰ª§ÔºåÂ∑°Á∫ø
+  34   2                      {
+  35   3                              case 1:turn(1550,1550);break;     //Â§ßÂπÖÂêëÂè≥ËΩ¨
+  36   3                              case 2:          
+  37   3                              case 3:turn(1550,1500);break;     //Â∞èÂπÖÂêëÂè≥ËΩ¨
+  38   3      
+  39   3                              case 8:turn(1450,1450);break;     //Â§ßÂπÖÂêëÂ∑¶ËΩ¨
+  40   3                              case 4:turn(1500, 1480); break;   //Â∞èÂπÖÂêëÂ∑¶ËΩ¨
+  41   3                              case 12:turn(1500,1450);break;    //Â∞èÂπÖÂêëÂ∑¶ËΩ¨
+  42   3      
+  43   3                              case 5:
+  44   3                              case 6:
+  45   3                              case 7:
+  46   3                              case 10:
+  47   3                              case 13:
+  48   3                              case 14:
+  49   3                              case 15:Fast_forward(6);break;    //ÂêëÂâç2Â∞èÊ≠•                       
+  50   3                      }
+  51   2                      
+  52   2                      if(dis < 3 && flag_t == 1)
+  53   2                      {
+  54   3                              turn_back();
+C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 2   
 
-  54   4                                      case 8:Fast_forward(18);turn_left_45();break; //«∞Ω¯20≤Ω£¨‘Ÿ◊Û◊™45∂»£¨‘Ÿ«∞Ω¯13≤Ω°£
-  55   4                                      case 9:Fast_forward(15);turn_right_90();break;           //”“◊™90∂»
-  56   4                                      case 10:Fast_forward(15);turn_left_90();break;           //◊Û◊™90∂»
-  57   4                              }
-  58   3                              ii=0;                                   //Ω´ii±‰¡ø«Â¡„
-  59   3                      }
-  60   2                      
-  61   2                      if(record%2==0 && record>0 && flag==0)//÷∏ª”±‰¡ø÷µŒ™≈º ˝£¨≤¢«“∑«¡„ ±≤≈÷¥––“‘œ¬”Ôæ‰°£
-  62   2                      {
-  63   3                              ii++;    
-  64   3                              if(ii>30-j*5)                           //62–°≥µ∞—ŒÔøÈ∞≤∑≈µƒŒª÷√◊ˆ“ª∂®µƒº‰∏Ù? 
-  65   3                              {
-  66   4                                      back(30);//32
-  67   4                                      turn_back();
-  68   4                                      flag=1;
-  69   4                                      ii=0;
-  70   4                                      j=j+1;
-  71   4                              }
-  72   3                      }
-  73   2                      
-  74   2                      if(record%2==1)         //–°≥µºÏ≤‚µΩ∞◊µ„£¨»°œ¬ŒÔøÈ∫Û◊™
-  75   2                      {
-  76   3                              if(qtis==0)
-  77   3                                      ii++;    
-  78   3                              if(ii>1 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis ==
-             - 7))
-  79   3                              {
-  80   4                                       turn_back();
-  81   4                                       ii=0;
-  82   4                              }                                                                                                                                                                                                                                  
-  83   3                      }
-  84   2                      if(record==10)                                   //µ⁄æ≈¥Œ4∏ˆ—≤œﬂ¥´∏–∆˜∂ººÏ≤‚µΩ∫⁄œﬂ£¨‘Ú«∞Ω¯26≤Ω£¨‘Ÿ”“◊™90∂»°£
-  85   2                      {
-  86   3      //                      Fast_forward(10);
-  87   3      //                      turn_right_90();
-  88   3                              stop();break;   
-  89   3                      }
-  90   2                      
-  91   2              }       
-  92   1      }
+  55   3                              flag_t = 0;
+  56   3                      }
+  57   2      
+  58   2                      if (flag_t == 0)
+  59   2                      {
+  60   3                              ii++;    
+  61   3                              if(ii>30-j*8) 
+  62   3                              {
+  63   4                                      back(30);//32
+  64   4                                      turn_back();
+  65   4                                      flag=1;
+  66   4                                      ii=0;
+  67   4                                      j=j+1;
+  68   4                                      flag_t = 1;
+  69   4                              }
+  70   3                              
+  71   3                      }
+  72   2      
+  73   2                      //ÊµãËØïqti     
+  74   2      //              if(qtis == 0)
+  75   2      //              {
+  76   2      //                      ii++;
+  77   2      //              }
+  78   2      //              if(ii > 2 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis
+             - == 7))
+  79   2      //              {
+  80   2      //                      turn_back();
+  81   2      //                      flag = 0;
+  82   2      //                      ii = 0;
+  83   2      //              }
+  84   2                      
+  85   2                      
+  86   2      
+  87   2                      // if(qtis==15)                                   
+  88   2                      // {                                              
+  89   2                      //      record++;                                       
+  90   2                      //      if(record%2==0 && record>0)
+  91   2                      //              flag=0;
+  92   2                      //      switch(record)                          
+  93   2                      //      {
+  94   2                      //              case 1:Fast_forward(12);turn_left_90();break;           //Á¨¨‰∏ÄÊ¨°Âà∞‰∏≠ÂøÉÁÇπÂ∑¶ËΩ¨90
+  95   2                      //              case 2:Fast_forward(15);turn_right_90();break;
+  96   2                      //              case 3:Fast_forward(15);turn_left_45();break;
+  97   2                      //              case 4:Fast_forward(20);turn_right_45();break;  
+  98   2                      //              case 5:Fast_forward(15);break;
+  99   2                      //              case 6:Fast_forward(15);break;
+ 100   2                      //              case 7:Fast_forward(15);turn_right_45();break;             
+ 101   2                      //              case 8:Fast_forward(18);turn_left_45();break;
+ 102   2                      //              case 9:Fast_forward(15);turn_right_90();break;           
+ 103   2                      //              case 10:Fast_forward(15);turn_left_90();break;
+ 104   2                      //      }
+ 105   2                      //      ii=0;
+ 106   2                      // }
+ 107   2                      
+ 108   2                      // if(record%2==0 && record>0 && flag == 0)
+ 109   2                      // {
+ 110   2                      //      ii++;    
+ 111   2                      //      if(ii>30-j*5) 
+ 112   2                      //      {
+ 113   2                      //              back(30);//32
+ 114   2                      //              turn_back();
+ 115   2                      //              flag=1;
+C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 3   
+
+ 116   2                      //              ii=0;
+ 117   2                      //              j=j+1;
+ 118   2                      //      }
+ 119   2                      // }
+ 120   2                      
+ 121   2                      // if(record%2==1)              
+ 122   2                      // {
+ 123   2                      //      if(qtis==0)
+ 124   2                      //              ii++;    
+ 125   2                      //      if(ii>1 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis
+             - == 7))
+ 126   2                      //      {
+ 127   2                      //               turn_back();
+ 128   2                      //               ii=0;
+ 129   2                      //      }                                                                                                                          
+ 130   2                      // }
+ 131   2                      // if(record==10)                               
+ 132   2                      // {
+ 133   2                      //      //              Fast_forward(10);
+ 134   2                      //      //              turn_right_90();
+ 135   2                      //      stop();break;   
+ 136   2                      // }
+ 137   2                      
+ 138   2              }       
+ 139   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    465    ----
+   CODE SIZE        =    244    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3       5
+   DATA SIZE        =      4       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
