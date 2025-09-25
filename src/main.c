@@ -108,7 +108,7 @@ void main(void)
 		if(record%2==0 && record>0 && flag == 0)
 		{
 			ii++;	 
-			if(ii>30-j*5) 
+			if(ii>30-j*6) 
 			{
 				back(30);//32
 				turn_back();
