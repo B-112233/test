@@ -15,8 +15,8 @@ void main(void)
 	unsigned int dis;
 	//uart_Init();		//初始化超声波
 
-	// delay_nms(2000);
-	// Fast_forward(40);
+	delay_nms(2000);
+	Fast_forward(40);
 	while(1)
 	{
 		//InitTimer();		//给超声波计时
@@ -37,7 +37,7 @@ void main(void)
 			case 3:turn(1550,1500);break;	  //小幅向右转
 
 			case 8:turn(1450,1450);break;	  //大幅向左转
-			case 4:turn(1500, 1480); break;   //小幅向左转
+			case 4:
 			case 12:turn(1500,1450);break;	  //小幅向左转
 
 			case 5:
@@ -85,7 +85,8 @@ void main(void)
 //		}
 
 		if(qtis==15)					  
-		{						  
+		{
+			flag_t = 1;					  
 			record++;					
 			if(record%2==0 && record>0)
 				flag=0;
@@ -100,7 +101,7 @@ void main(void)
 				case 7:Fast_forward(15);turn_right_45();break;   	   
 				case 8:Fast_forward(18);turn_left_45();break;
 				case 9:Fast_forward(15);turn_right_90();break;		 
-				case 10:Fast_forward(15);turn_left_90();break;
+				case 10:Fast_forward(12);turn_left_90();break;
 			}
 			ii=0;
 		}
@@ -108,13 +109,13 @@ void main(void)
 		if(record%2==0 && record>0 && flag == 0)
 		{
 			ii++;	 
-			if(ii>30-j*6) 
+			if(ii > (20 - j * 2)) 
 			{
 				back(30);//32
 				turn_back();
 				flag=1;
 				ii=0;
-				j=j+1;
+				j++;
 			}
 		}
 		
@@ -122,18 +123,26 @@ void main(void)
 		{
 			if(qtis==0)
 				ii++;	 
-			if(ii>1 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis == 7))
+			if(ii > 2 && (qtis==0 || qtis == 10 || qtis == 5 || qtis == 9) && flag_t == 1)
 			{
-				 turn_back();
-				 ii=0;
+				flag_t = 0;
+				Fast_forward(40);
+				turn_back();
+				ii=0;
 			}															   
 		}
+		
 		if(record==10)				
 		{
-			//		Fast_forward(10);
-			//		turn_right_90();
-			stop();break;	
+			Fast_forward(40);
+			//turn_right_90();
+			stop();
+			break;	
 		}
+	}
+	
+	/* 第二部分 判断颜色 搬到指定地点*/
+	while(1){
 		
-	}	
+	}
 }
