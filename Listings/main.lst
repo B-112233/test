@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  09/25/2025 19:08:40 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -29,12 +29,12 @@ line level    source
   19   1              // Fast_forward(40);
   20   1              while(1)
   21   1              {
-  22   2                      InitTimer();            //给超声波计时
-  23   2                      dis = GetSonarDis();
+  22   2                      //InitTimer();          //给超声波计时
+  23   2                      //dis = GetSonarDis();
   24   2      
   25   2                      //测试超声波
-  26   2                      // printf("ultrasonic = %d\n", dis);
-  27   2                      // delay_nms(1000);
+  26   2      //              printf("ultrasonic = %d\n", dis);
+  27   2      //              delay_nms(1000);
   28   2      
   29   2                      /*第一阶段 把物块搬回缓冲区*/
   30   2                      P0=0x0f;                //检测黑线                                                                                                                   
@@ -58,105 +58,107 @@ line level    source
   48   3                              case 14:
   49   3                              case 15:Fast_forward(6);break;    //向前2小步                       
   50   3                      }
-  51   2                      
-  52   2                      if(dis < 3 && flag_t == 1)
-  53   2                      {
-  54   3                              turn_back();
-C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 2   
+  51   2      
+  52   2      
+  53   2      //              /*测试搬运*/
+  54   2      //              if(dis <= 3 && flag_t == 1)
+C51 COMPILER V9.54   MAIN                                                                  09/25/2025 19:08:40 PAGE 2   
 
-  55   3                              flag_t = 0;
-  56   3                      }
-  57   2      
-  58   2                      if (flag_t == 0)
-  59   2                      {
-  60   3                              ii++;    
-  61   3                              if(ii>30-j*8) 
-  62   3                              {
-  63   4                                      back(30);//32
-  64   4                                      turn_back();
-  65   4                                      flag=1;
-  66   4                                      ii=0;
-  67   4                                      j=j+1;
-  68   4                                      flag_t = 1;
-  69   4                              }
-  70   3                              
-  71   3                      }
-  72   2      
-  73   2                      //测试qti     
-  74   2      //              if(qtis == 0)
-  75   2      //              {
-  76   2      //                      ii++;
-  77   2      //              }
-  78   2      //              if(ii > 2 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis
-             - == 7))
-  79   2      //              {
-  80   2      //                      turn_back();
-  81   2      //                      flag = 0;
-  82   2      //                      ii = 0;
-  83   2      //              }
-  84   2                      
-  85   2                      
-  86   2      
-  87   2                      // if(qtis==15)                                   
-  88   2                      // {                                              
-  89   2                      //      record++;                                       
-  90   2                      //      if(record%2==0 && record>0)
-  91   2                      //              flag=0;
-  92   2                      //      switch(record)                          
-  93   2                      //      {
-  94   2                      //              case 1:Fast_forward(12);turn_left_90();break;           //第一次到中心点左转90
-  95   2                      //              case 2:Fast_forward(15);turn_right_90();break;
-  96   2                      //              case 3:Fast_forward(15);turn_left_45();break;
-  97   2                      //              case 4:Fast_forward(20);turn_right_45();break;  
-  98   2                      //              case 5:Fast_forward(15);break;
-  99   2                      //              case 6:Fast_forward(15);break;
- 100   2                      //              case 7:Fast_forward(15);turn_right_45();break;             
- 101   2                      //              case 8:Fast_forward(18);turn_left_45();break;
- 102   2                      //              case 9:Fast_forward(15);turn_right_90();break;           
- 103   2                      //              case 10:Fast_forward(15);turn_left_90();break;
- 104   2                      //      }
- 105   2                      //      ii=0;
- 106   2                      // }
- 107   2                      
- 108   2                      // if(record%2==0 && record>0 && flag == 0)
- 109   2                      // {
- 110   2                      //      ii++;    
- 111   2                      //      if(ii>30-j*5) 
- 112   2                      //      {
- 113   2                      //              back(30);//32
- 114   2                      //              turn_back();
- 115   2                      //              flag=1;
-C51 COMPILER V9.54   MAIN                                                                  09/22/2025 20:34:11 PAGE 3   
+  55   2      //              {
+  56   2      //                      turn_back();
+  57   2      //                      flag_t = 0;
+  58   2      //              }
+  59   2      
+  60   2      //              if (flag_t == 0)
+  61   2      //              {
+  62   2      //                      ii++;    
+  63   2      //                      if(ii>30-j*6) 
+  64   2      //                      {
+  65   2      //                              back(30);//32
+  66   2      //                              turn_back();
+  67   2      //                              flag=1;
+  68   2      //                              ii=0;
+  69   2      //                              j=j+1;
+  70   2      //                              flag_t = 1;
+  71   2      //                      }
+  72   2      //                      
+  73   2      //              }
+  74   2      
+  75   2                      //测试qti     
+  76   2                      if(qtis == 0)
+  77   2                      {
+  78   3                              ii++;
+  79   3                      }
+  80   2                      if(ii > 1 && qtis==0)
+  81   2                      {
+  82   3                              turn_back();
+  83   3                              flag = 0;
+  84   3                              ii = 0;
+  85   3                      }
+  86   2                      
+  87   2                      
+  88   2      
+  89   2                      // if(qtis==15)                                   
+  90   2                      // {                                              
+  91   2                      //      record++;                                       
+  92   2                      //      if(record%2==0 && record>0)
+  93   2                      //              flag=0;
+  94   2                      //      switch(record)                          
+  95   2                      //      {
+  96   2                      //              case 1:Fast_forward(12);turn_left_90();break;           //第一次到中心点左转90
+  97   2                      //              case 2:Fast_forward(15);turn_right_90();break;
+  98   2                      //              case 3:Fast_forward(15);turn_left_45();break;
+  99   2                      //              case 4:Fast_forward(20);turn_right_45();break;  
+ 100   2                      //              case 5:Fast_forward(15);break;
+ 101   2                      //              case 6:Fast_forward(15);break;
+ 102   2                      //              case 7:Fast_forward(15);turn_right_45();break;             
+ 103   2                      //              case 8:Fast_forward(18);turn_left_45();break;
+ 104   2                      //              case 9:Fast_forward(15);turn_right_90();break;           
+ 105   2                      //              case 10:Fast_forward(15);turn_left_90();break;
+ 106   2                      //      }
+ 107   2                      //      ii=0;
+ 108   2                      // }
+ 109   2                      
+ 110   2                      // if(record%2==0 && record>0 && flag == 0)
+ 111   2                      // {
+ 112   2                      //      ii++;    
+ 113   2                      //      if(ii>30-j*5) 
+ 114   2                      //      {
+ 115   2                      //              back(30);//32
+ 116   2                      //              turn_back();
+C51 COMPILER V9.54   MAIN                                                                  09/25/2025 19:08:40 PAGE 3   
 
- 116   2                      //              ii=0;
- 117   2                      //              j=j+1;
- 118   2                      //      }
- 119   2                      // }
- 120   2                      
- 121   2                      // if(record%2==1)              
- 122   2                      // {
- 123   2                      //      if(qtis==0)
- 124   2                      //              ii++;    
- 125   2                      //      if(ii>1 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis
+ 117   2                      //              flag=1;
+ 118   2                      //              ii=0;
+ 119   2                      //              j=j+1;
+ 120   2                      //      }
+ 121   2                      // }
+ 122   2                      
+ 123   2                      // if(record%2==1)              
+ 124   2                      // {
+ 125   2                      //      if(qtis==0)
+ 126   2                      //              ii++;    
+ 127   2                      //      if(ii>1 && (qtis==0 || qtis ==4 ||qtis == 2||qtis == 5||qtis ==10 || qtis == 9 || qtis == 14 || qtis
              - == 7))
- 126   2                      //      {
- 127   2                      //               turn_back();
- 128   2                      //               ii=0;
- 129   2                      //      }                                                                                                                          
- 130   2                      // }
- 131   2                      // if(record==10)                               
- 132   2                      // {
- 133   2                      //      //              Fast_forward(10);
- 134   2                      //      //              turn_right_90();
- 135   2                      //      stop();break;   
- 136   2                      // }
- 137   2                      
- 138   2              }       
- 139   1      }
+ 128   2                      //      {
+ 129   2                      //               turn_back();
+ 130   2                      //               ii=0;
+ 131   2                      //      }                                                                                                                          
+ 132   2                      // }
+ 133   2                      // if(record==10)                               
+ 134   2                      // {
+ 135   2                      //      //              Fast_forward(10);
+ 136   2                      //      //              turn_right_90();
+ 137   2                      //      stop();break;   
+ 138   2                      // }
+ 139   2                      
+ 140   2              }       
+ 141   1      }
+*** WARNING C280 IN LINE 15 OF src\main.c: 'dis': unreferenced local variable
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    244    ----
+   CODE SIZE        =    196    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
@@ -166,4 +168,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
