@@ -6,18 +6,19 @@
 #include "tcs230.h"
 
 int qtis;
-char flag = 0, flag_t = 1;
+char flag = 0, flag_t = 1, flag_color = 1, flag_back = 1;
 
 
 void main(void)
 {
-	unsigned char record=0, j=0,ji_shu=0,angle=0, color;
+	unsigned char record=0, j=0,ji_shu=0,angle=0;
+	int color;
 	char ii = 0;
 	unsigned int dis;
 
 	//开始时向前走一段
-	delay_nms(2000);
-	Fast_forward(40);
+	// delay_nms(2000);
+	// Fast_forward(40);
 
 	/*第一阶段 把物块搬回缓冲区*/
 // 	while(1)
@@ -30,11 +31,9 @@ void main(void)
 // 			case 1:turn(1550,1550);break;	  //大幅向右转
 // 			case 2: 	 
 // 			case 3:turn(1550,1500);break;	  //小幅向右转
-
 // 			case 8:turn(1450,1450);break;	  //大幅向左转
 // 			case 4:
 // 			case 12:turn(1500,1450);break;	  //小幅向左转
-
 // 			case 5:
 // 			case 6:
 // 			case 7:
@@ -43,7 +42,6 @@ void main(void)
 // 			case 14:
 // 			case 15:Fast_forward(6);break; 	  //向前2小步			
 // 		}
-
 
 // //		/*测试搬运*/
 // //		if(dis <= 3 && flag_t == 1)
@@ -129,6 +127,8 @@ void main(void)
 		
 // 		if(record==10)				
 // 		{
+//			record = 0;
+//			flag = 0;
 // 			Fast_forward(40);
 // 			//turn_right_90();
 // 			//stop();
@@ -149,61 +149,67 @@ void main(void)
 
 
 		// 循迹
-		P0 = 0x0f;		  // 检测黑线
-		qtis = P0 & 0x0f; // 读取4个巡线传感器的值
-		Fast_forward(1);  // 前进一小步
-		switch (qtis)	  // 按照4个巡线传感器的值执行移动指令，巡线
-		{
-		case 1:
-			turn(1550, 1550);
-			break; // 大幅向右转
-		case 2:
-		case 3:
-			turn(1550, 1500);
-			break; // 小幅向右转
-
-		case 8:
-			turn(1450, 1450);
-			break; // 大幅向左转
-		case 4:
-		case 12:
-			turn(1500, 1450);
-			break; // 小幅向左转
-
-		case 5:
-		case 6:
-		case 7:
-		case 10:
-		case 13:
-		case 14:
-		case 15:
-			Fast_forward(6);
-			break; // 向前2小步
-		}
+		// P0 = 0x0f;		  // 检测黑线
+		// qtis = P0 & 0x0f; // 读取4个巡线传感器的值
+		// Fast_forward(1);  // 前进一小步
+		// switch (qtis)	  // 按照4个巡线传感器的值执行移动指令，巡线
+		// {
+		// 	case 1:turn(1550, 1550);break; // 大幅向右转
+		// 	case 2:
+		// 	case 3:turn(1550, 1500);break; // 小幅向右转
+		// 	case 8:turn(1450, 1450);break; // 大幅向左转
+		// 	case 4:
+		// 	case 12:turn(1500, 1450);break; // 小幅向左转
+		// 	case 5:
+		// 	case 6:
+		// 	case 7:
+		// 	case 10:
+		// 	case 13:
+		// 	case 14:
+		// 	case 15:Fast_forward(6);break; // 向前2小步
+		// }
 
 		//dis <= 3时判断颜色，获取颜色
-		if(dis <= 3)
+		if(dis <= 3 && flag_color == 1)
 		{
 			stop();
 			color = get_color();
-			turn_back();
+			//turn_back();
+			flag_color = 0;
+			flag_back = 0;
 		}
 
-		if (qtis == 15)
+		if (qtis == 15 && flag_back == 0)
 		{
-			switch(color)
+			switch (color)
 			{
-				case 1:Fast_forward(12);turn_left_90();break;
-				case 2:Fast_forward(15);turn_right_90();break;
-				case 3:Fast_forward(15);turn_left_45();break;
-				case 4:Fast_forward(20);turn_right_45();break;
-				case 5:Fast_forward(15);break;
-				case 6:Fast_forward(15);break;
-				case 7:Fast_forward(15);turn_right_45();break;
-				case 8:Fast_forward(18);turn_left_45();break;
-				case 9:Fast_forward(15);turn_right_90();break;
-				case 10:Fast_forward(12);turn_left_90();break;
+				case YELLOW:Fast_forward(12);turn_left_90();break;
+				case WHITE:Fast_forward(15);turn_left_45();break;
+				case RED:Fast_forward(15);break;
+				case BLACK:Fast_forward(15);turn_right_45();break;
+				case BLUE:Fast_forward(15);turn_right_90();break;
 			}
 		}
+
+		//放到对应位置，flag_back置1
+		
+
+
+		// if (qtis == 15 && flag_back == 1)
+		// {
+		// 	switch (color)
+		// 	{
+		// 		case YELLOW:Fast_forward(12);turn_right_90();break;
+		// 		case 2:Fast_forward(15);turn_right_90();break;
+		// 		case 3:Fast_forward(15);turn_left_45();break;
+		// 		case 4:Fast_forward(20);turn_right_45();break;
+		// 		case 5:Fast_forward(15);break;
+		// 		case 6:Fast_forward(15);break;
+		// 		case 7:Fast_forward(15);turn_right_45();break;
+		// 		case 8:Fast_forward(18);turn_left_45();break;
+		// 		case 9:Fast_forward(15);turn_right_90();break;
+		// 		case 10:Fast_forward(12);turn_left_90();break;
+		// 	}
+		// }
 	}
 }

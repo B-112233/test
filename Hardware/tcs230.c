@@ -72,9 +72,10 @@ void c1ms_out() interrupt 1//定时器0 1ms中断响应
 }   
 
 /*****************************主控制程序****************************/
-unsigned char get_color(void)
+int get_color(void)
 {
-	unsigned char i = 10;
+	unsigned char i = 5;
+	int color;
 	test_led();			//测试led
 	delay_nms(80);		//延时 等待串口调试工具
 	LED=1;				//打开led
@@ -128,7 +129,28 @@ unsigned char get_color(void)
 		TR1=1;	
 	}
 
-
+	printf("red=%ld,green=%ld,blue=%ld\n", red, green, blue);
+	if(red <= 35 && green <= 35 && blue <= 35){
+		color = BLACK;
+	}
+	else if (red >= 200 && green >= 200 && blue >= 200){
+		color = WHITE;
+	}
+	else if (red >= 150 && green <= 50 && blue <= 50){
+		color = RED;
+	}
+	else if (red >= 200 && green >= 150 && blue <= 100){
+		color = YELLOW;
+	}
+	else{
+		color = BLUE;
+		printf("color = %d\n", color);
+	}
+	EA = 0;
+	ET0 = 0;
+	TR0 = 0;
+	TR1 = 0;
+	return color;
 }
 
 
