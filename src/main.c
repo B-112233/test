@@ -6,11 +6,11 @@
 #include "tcs230.h"
 
 int qtis;
-unsigned char flag = 0, flag_t = 1, flag_color = 1, flag_back = 1, flag_dis = 1, flag_black = 0;
+unsigned char flag = 0, flag_t = 1, flag_color = 1, flag_back = 1, flag_dis = 1, flag_black = 0, flag_obj = 0;
 
 void main(void)
 {
-	unsigned char record=0 + 9, j=0, ji_shu=0,angle=0;
+	unsigned char record = 0, j=0, ji_shu=0,angle=0;
 	int color, step = 0;
 	char ii = 0;
 	unsigned int dis;
@@ -79,6 +79,11 @@ void main(void)
 
  		if(qtis==15)					  
  		{
+			if (record % 2 == 1 && record > 0)
+			{
+				flag_dis = 1;
+				flag_color = 1;
+			}
  			flag_t = 1;					  
  			record++;					
  			if(record%2==0 && record>0)
@@ -98,32 +103,70 @@ void main(void)
  			}
  			ii=0;
  		}
+
+		if (flag_dis == 1)
+		{
+			InitTimer(); // 给超声波计时
+			dis = GetSonarDis();
+		}
+
+		if (dis <= 3 && flag_color == 1 && flag_dis == 1)
+		{
+			stop();
+			color = get_color();
+			turn_back();
+			flag_color = 0;
+			flag_dis = 0;
+			flag_obj = 1;
+			Fast_forward(40);
+		}
+
+		// 简化版本 - 假设所有情况都有相同的模式
+		if ((color == YELLOW && record == 1) ||
+			(color == WHITE && record == 3) ||
+			(color == RED && record == 5) ||
+			(color == BLACK && record == 7) ||
+			(color == BLUE && record == 9))
+		{
+			if (qtis == 0)
+			{
+				back(30);
+				turn_back();
+			}
+		}
+		else
+		{
+			turn_back();
+		}
+
+		if (record % 2 == 1 && flag_obj == 0)
+		{
+			if (qtis == 0)
+				ii++;
+			if (ii > 2 && (qtis == 0 || qtis == 10 || qtis == 5 || qtis == 9) && flag_t == 1)
+			{
+				flag_t = 0;
+				Fast_forward(40);
+				turn_back();
+				ii = 0;
+			}
+		}
 		
- 		if(record%2==0 && record>0 && flag == 0)
+		if(record%2==0 && record>0 && flag == 0)
  		{
  			ii++;	 
  			if(ii > (20 - j * 2)) 
  			{
  				back(30);//32
  				turn_back();
+				flag_obj = 0;
  				flag=1;
  				ii=0;
  				j++;
  			}
  		}
 		
- 		if(record%2==1)		
- 		{
- 			if(qtis==0)
- 				ii++;	 
- 			if(ii > 2 && (qtis==0 || qtis == 10 || qtis == 5 || qtis == 9) && flag_t == 1)
- 			{
- 				flag_t = 0;
- 				Fast_forward(40);
- 				turn_back();
- 				ii=0;
- 			}															   
- 		}
+ 		
 		
  		if(record==10)				
  		{

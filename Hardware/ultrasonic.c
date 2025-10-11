@@ -52,7 +52,7 @@ unsigned int GetSonarDis(void)
 	high = TH0 * 256;
 	low = TL0;
 	dis = (high + low) / 58;
-	if(dis < 3 || dis > 90){
+	if(dis < 3){
 		dis = 0;
 	}
 	return dis;
