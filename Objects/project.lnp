@@ -2,6 +2,7 @@
 ".\Objects\motor.obj",
 ".\Objects\uart.obj",
 ".\Objects\ultrasonic.obj",
+".\Objects\tcs230.obj",
 ".\Objects\main.obj" 
 TO ".\Objects\project" 
 PRINT(".\Listings\project.m51") RAMSIZE(256) 

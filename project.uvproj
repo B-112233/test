@@ -409,6 +409,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\ultrasonic.h</FilePath>
             </File>
+            <File>
+              <FileName>tcs230.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\tcs230.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\uart2.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -418,11 +428,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>tsc230.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\tsc230.h</FilePath>
             </File>
           </Files>
         </Group>
