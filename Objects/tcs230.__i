@@ -1,0 +1,1 @@
+"Hardware\tcs230.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\System;.\src;.\Hardware) DEBUG OBJECTEXTEND PRINT(.\Listings\tcs230.lst) OBJECT(.\Objects\tcs230.obj)
