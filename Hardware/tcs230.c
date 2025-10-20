@@ -74,7 +74,7 @@ void c1ms_out() interrupt 1//��ʱ��0 1ms�ж���Ӧ
 /*****************************�����Ƴ���****************************/
 int get_color(void)
 {
-	unsigned char i = 1;
+	unsigned char i = 2;
 	int color;
 	test_led();			//����led
 	delay_nms(80);		//��ʱ �ȴ����ڵ��Թ���

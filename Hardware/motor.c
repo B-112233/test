@@ -1,8 +1,8 @@
-#include <AT89X52.H>     //°üº¬52Í·ÎÄ¼þ
+#include <AT89X52.H>     //ï¿½ï¿½ï¿½ï¿½52Í·ï¿½Ä¼ï¿½
 #include <Boebot.h>
 
-sbit right_moter=P1^0;//¶¨ÒåÓÒµç»ú¶Ë¿Ú
-sbit left_moter =P1^1;//¶¨Òå×óµç»ú¶Ë¿Ú
+sbit right_moter=P1^0;//ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ë¿ï¿½
+sbit left_moter =P1^1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½
 
 void stop(void)//Í£Ö¹
 {
@@ -17,7 +17,7 @@ void stop(void)//Í£Ö¹
 	delay_nms(20);
 }
 	
-void Fast_forward(unsigned char a)	//¿ìËÙÇ°½ø
+void Fast_forward(unsigned char a)	//ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
 {
 	unsigned char i;
 	for(i=0;i<a;i++)		   
@@ -34,7 +34,7 @@ void Fast_forward(unsigned char a)	//¿ìËÙÇ°½ø
 	}
 }
 
-void Forward(unsigned int left,unsigned int right,unsigned char a)	//×Ô¶¨ÒåÇ°½ø
+void Forward(unsigned int left,unsigned int right,unsigned char a)	//ï¿½Ô¶ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
 {
 	unsigned char i;
 	for(i=0;i<a;i++)		   
@@ -51,7 +51,7 @@ void Forward(unsigned int left,unsigned int right,unsigned char a)	//×Ô¶¨ÒåÇ°½ø
 	}
 }
  	
-void back(unsigned char a)//ºóÍË
+void back(unsigned char a)//ï¿½ï¿½ï¿½ï¿½
 {	
 	unsigned char i;
 	for(i=0;i<a;i++)		   
@@ -68,8 +68,8 @@ void back(unsigned char a)//ºóÍË
 	}
 }
 
-/* ÊäÈëÃëÊý£¬ ×ó ÓÒ*/
-void turn(unsigned int left,unsigned int right) //Î¢×ª¶¯	  
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½*/
+void turn(unsigned int left,unsigned int right) //Î¢×ªï¿½ï¿½	  
 {
 	unsigned char i;
 	for(i=0;i<2;i++)
@@ -86,7 +86,7 @@ void turn(unsigned int left,unsigned int right) //Î¢×ª¶¯
 	}
 }
 
-void turn_left_150(void)		   //×ó×ª150¶È 
+void turn_left_150(void)		   //ï¿½ï¿½×ª150ï¿½ï¿½ 
 {
 	unsigned char i;
 	for(i=0;i<100;i++)		   
@@ -106,7 +106,7 @@ void turn_left_150(void)		   //×ó×ª150¶È
 void turn_left_90(void)
 {
 	unsigned char i;
-	for(i=0;i<24;i++)		   //×ó×ª90¶È
+	for(i=0;i<24;i++)		   //ï¿½ï¿½×ª90ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1400);
@@ -120,7 +120,7 @@ void turn_left_90(void)
 	}
 }
 
-void turn_left_45(void)		   //×ó×ª45¶È 
+void turn_left_45(void)		   //ï¿½ï¿½×ª45ï¿½ï¿½ 
 {
 	unsigned char i;
 	for(i=0;i<15;i++)		   
@@ -137,7 +137,7 @@ void turn_left_45(void)		   //×ó×ª45¶È
 	}
 }
 
-void turn_left_120(void)		   //×ó×ª120¶È 
+void turn_left_120(void)		   //ï¿½ï¿½×ª120ï¿½ï¿½ 
 {
 	unsigned char i;
 	for(i=0;i<180;i++)		   
@@ -157,7 +157,7 @@ void turn_left_120(void)		   //×ó×ª120¶È
 void turn_right_150(void)
 {
 	unsigned char i;
-	for(i=0;i<70;i++)		   //ÓÒ×ª150¶È
+	for(i=0;i<70;i++)		   //ï¿½ï¿½×ª150ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1550);
@@ -174,7 +174,7 @@ void turn_right_150(void)
 void turn_right_90(void) 
 {
 	unsigned char i;
-	for(i=0;i<26;i++)		   //ÓÒ×ª90¶È
+	for(i=0;i<26;i++)		   //ï¿½ï¿½×ª90ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1600);
@@ -191,7 +191,7 @@ void turn_right_90(void)
 void turn_right_45(void)
 {
 	unsigned char i;
-	for(i=0;i<15;i++)		   //ÓÒ×ª45¶È
+	for(i=0;i<15;i++)		   //ï¿½ï¿½×ª45ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1600);
@@ -208,7 +208,7 @@ void turn_right_45(void)
 void turn_right_120(void)
 {
 	unsigned char i;
-	for(i=0;i<180;i++)		   //ÓÒ×ª120¶È
+	for(i=0;i<180;i++)		   //ï¿½ï¿½×ª120ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1520);
@@ -225,7 +225,7 @@ void turn_right_120(void)
 void fast_turn_right_90(void)
 {
 	unsigned char i;
-	for(i=0;i<26;i++)		   //ÓÒ×ª90¶È
+	for(i=0;i<26;i++)		   //ï¿½ï¿½×ª90ï¿½ï¿½
 	{
 		right_moter=1;
 		delay_nus(1600);
@@ -239,8 +239,8 @@ void fast_turn_right_90(void)
 	}
 }
 
-/* ÊäÈëÃëÊý£¬ ×ó ÓÒ*/
-void turn_r(unsigned int left,unsigned int right) //×ª¶¯	  
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½*/
+void turn_r(unsigned int left,unsigned int right) //×ªï¿½ï¿½	  
 {
 	
 	right_moter=1;
@@ -255,7 +255,7 @@ void turn_r(unsigned int left,unsigned int right) //×ª¶¯
 
 }
 
-void turn_back()	//ºó×ª 
+void turn_back()	//ï¿½ï¿½×ª 
 {
 	unsigned int i;
 	for(i=0;i<68;i++)		  
@@ -267,6 +267,23 @@ void turn_back()	//ºó×ª
 		left_moter=1;
 		delay_nus(1440);
 		left_moter=0;
+
+		delay_nms(20);
+	}
+}
+
+void turn_back_r() // ï¿½ï¿½×ª
+{
+	unsigned int i;
+	for (i = 0; i < 68; i++)
+	{
+		right_moter = 1;
+		delay_nus(1560);
+		right_moter = 0;
+
+		left_moter = 1;
+		delay_nus(1560);
+		left_moter = 0;
 
 		delay_nms(20);
 	}

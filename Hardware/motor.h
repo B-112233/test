@@ -9,6 +9,7 @@ void back(unsigned char a);
 void turn(unsigned int left,unsigned int right);
 
 void turn_back();
+void turn_back_r();
 
 void turn_left_150(void);
 void turn_left_90(void);

@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MOTOR                                                                 10/13/2025 15:05:48 PAGE 1   
+C51 COMPILER V9.54   MOTOR                                                                 10/20/2025 17:14:00 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MOTOR
@@ -8,11 +8,11 @@ COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE Hardware\motor.c OPTIMIZE(8,SPEED)
 
 line level    source
 
-   1          #include <AT89X52.H>     //°üº¬52Í·ÎÄ¼þ
+   1          #include <AT89X52.H>     //ï¿½ï¿½ï¿½ï¿½52Í·ï¿½Ä¼ï¿½
    2          #include <Boebot.h>
    3          
-   4          sbit right_moter=P1^0;//¶¨ÒåÓÒµç»ú¶Ë¿Ú
-   5          sbit left_moter =P1^1;//¶¨Òå×óµç»ú¶Ë¿Ú
+   4          sbit right_moter=P1^0;//ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ë¿ï¿½
+   5          sbit left_moter =P1^1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½
    6          
    7          void stop(void)//Í£Ö¹
    8          {
@@ -27,7 +27,7 @@ line level    source
   17   1              delay_nms(20);
   18   1      }
   19                  
-  20          void Fast_forward(unsigned char a)      //¿ìËÙÇ°½ø
+  20          void Fast_forward(unsigned char a)      //ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
   21          {
   22   1              unsigned char i;
   23   1              for(i=0;i<a;i++)                   
@@ -44,7 +44,7 @@ line level    source
   34   2              }
   35   1      }
   36          
-  37          void Forward(unsigned int left,unsigned int right,unsigned char a)      //×Ô¶¨ÒåÇ°½ø
+  37          void Forward(unsigned int left,unsigned int right,unsigned char a)      //ï¿½Ô¶ï¿½ï¿½ï¿½Ç°ï¿½ï¿½
   38          {
   39   1              unsigned char i;
   40   1              for(i=0;i<a;i++)                   
@@ -61,8 +61,8 @@ line level    source
   51   2              }
   52   1      }
   53                  
-  54          void back(unsigned char a)//ºóÍË
-C51 COMPILER V9.54   MOTOR                                                                 10/13/2025 15:05:48 PAGE 2   
+  54          void back(unsigned char a)//ï¿½ï¿½ï¿½ï¿½
+C51 COMPILER V9.54   MOTOR                                                                 10/20/2025 17:14:00 PAGE 2   
 
   55          {       
   56   1              unsigned char i;
@@ -80,8 +80,8 @@ line level    source
   68   2              }
   69   1      }
   70          
-  71          /* ÊäÈëÃëÊý£¬ ×ó ÓÒ*/
-  72          void turn(unsigned int left,unsigned int right) //Î¢×ª¶¯          
+  71          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½*/
+  72          void turn(unsigned int left,unsigned int right) //Î¢×ªï¿½ï¿½      
   73          {
   74   1              unsigned char i;
   75   1              for(i=0;i<2;i++)
@@ -98,7 +98,7 @@ line level    source
   86   2              }
   87   1      }
   88          
-  89          void turn_left_150(void)                   //×ó×ª150¶È 
+  89          void turn_left_150(void)                   //ï¿½ï¿½×ª150ï¿½ï¿½ 
   90          {
   91   1              unsigned char i;
   92   1              for(i=0;i<100;i++)                 
@@ -118,7 +118,7 @@ line level    source
  106          void turn_left_90(void)
  107          {
  108   1              unsigned char i;
- 109   1              for(i=0;i<24;i++)                  //×ó×ª90¶È
+ 109   1              for(i=0;i<24;i++)                  //ï¿½ï¿½×ª90ï¿½ï¿½
  110   1              {
  111   2                      right_moter=1;
  112   2                      delay_nus(1400);
@@ -126,7 +126,7 @@ line level    source
  114   2      
  115   2                      left_moter=1;
  116   2                      delay_nus(1400);
-C51 COMPILER V9.54   MOTOR                                                                 10/13/2025 15:05:48 PAGE 3   
+C51 COMPILER V9.54   MOTOR                                                                 10/20/2025 17:14:00 PAGE 3   
 
  117   2                      left_moter=0;
  118   2      
@@ -134,7 +134,7 @@ line level    source
  120   2              }
  121   1      }
  122          
- 123          void turn_left_45(void)            //×ó×ª45¶È 
+ 123          void turn_left_45(void)            //ï¿½ï¿½×ª45ï¿½ï¿½ 
  124          {
  125   1              unsigned char i;
  126   1              for(i=0;i<15;i++)                  
@@ -151,7 +151,7 @@ line level    source
  137   2              }
  138   1      }
  139          
- 140          void turn_left_120(void)                   //×ó×ª120¶È 
+ 140          void turn_left_120(void)                   //ï¿½ï¿½×ª120ï¿½ï¿½ 
  141          {
  142   1              unsigned char i;
  143   1              for(i=0;i<180;i++)                 
@@ -171,7 +171,7 @@ line level    source
  157          void turn_right_150(void)
  158          {
  159   1              unsigned char i;
- 160   1              for(i=0;i<70;i++)                  //ÓÒ×ª150¶È
+ 160   1              for(i=0;i<70;i++)                  //ï¿½ï¿½×ª150ï¿½ï¿½
  161   1              {
  162   2                      right_moter=1;
  163   2                      delay_nus(1550);
@@ -188,9 +188,9 @@ line level    source
  174          void turn_right_90(void) 
  175          {
  176   1              unsigned char i;
- 177   1              for(i=0;i<26;i++)                  //ÓÒ×ª90¶È
+ 177   1              for(i=0;i<26;i++)                  //ï¿½ï¿½×ª90ï¿½ï¿½
  178   1              {
-C51 COMPILER V9.54   MOTOR                                                                 10/13/2025 15:05:48 PAGE 4   
+C51 COMPILER V9.54   MOTOR                                                                 10/20/2025 17:14:00 PAGE 4   
 
  179   2                      right_moter=1;
  180   2                      delay_nus(1600);
@@ -207,7 +207,7 @@ line level    source
  191          void turn_right_45(void)
  192          {
  193   1              unsigned char i;
- 194   1              for(i=0;i<15;i++)                  //ÓÒ×ª45¶È
+ 194   1              for(i=0;i<15;i++)                  //ï¿½ï¿½×ª45ï¿½ï¿½
  195   1              {
  196   2                      right_moter=1;
  197   2                      delay_nus(1600);
@@ -224,7 +224,7 @@ line level    source
  208          void turn_right_120(void)
  209          {
  210   1              unsigned char i;
- 211   1              for(i=0;i<180;i++)                 //ÓÒ×ª120¶È
+ 211   1              for(i=0;i<180;i++)                 //ï¿½ï¿½×ª120ï¿½ï¿½
  212   1              {
  213   2                      right_moter=1;
  214   2                      delay_nus(1520);
@@ -241,7 +241,7 @@ line level    source
  225          void fast_turn_right_90(void)
  226          {
  227   1              unsigned char i;
- 228   1              for(i=0;i<26;i++)                  //ÓÒ×ª90¶È
+ 228   1              for(i=0;i<26;i++)                  //ï¿½ï¿½×ª90ï¿½ï¿½
  229   1              {
  230   2                      right_moter=1;
  231   2                      delay_nus(1600);
@@ -254,11 +254,11 @@ line level    source
  238   2                      delay_nms(20);
  239   2              }
  240   1      }
-C51 COMPILER V9.54   MOTOR                                                                 10/13/2025 15:05:48 PAGE 5   
+C51 COMPILER V9.54   MOTOR                                                                 10/20/2025 17:14:00 PAGE 5   
 
  241          
- 242          /* ÊäÈëÃëÊý£¬ ×ó ÓÒ*/
- 243          void turn_r(unsigned int left,unsigned int right) //×ª¶¯          
+ 242          /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½*/
+ 243          void turn_r(unsigned int left,unsigned int right) //×ªï¿½ï¿½      
  244          {
  245   1              
  246   1              right_moter=1;
@@ -273,7 +273,7 @@ line level    source
  255   1      
  256   1      }
  257          
- 258          void turn_back()        //ºó×ª 
+ 258          void turn_back()        //ï¿½ï¿½×ª 
  259          {
  260   1              unsigned int i;
  261   1              for(i=0;i<68;i++)                 
@@ -289,14 +289,31 @@ line level    source
  271   2                      delay_nms(20);
  272   2              }
  273   1      }
+ 274          
+ 275          void turn_back_r() // ï¿½ï¿½×ª
+ 276          {
+ 277   1              unsigned int i;
+ 278   1              for (i = 0; i < 68; i++)
+ 279   1              {
+ 280   2                      right_moter = 1;
+ 281   2                      delay_nus(1560);
+ 282   2                      right_moter = 0;
+ 283   2      
+ 284   2                      left_moter = 1;
+ 285   2                      delay_nus(1560);
+ 286   2                      left_moter = 0;
+ 287   2      
+ 288   2                      delay_nms(20);
+ 289   2              }
+ 290   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    688    ----
+   CODE SIZE        =    740    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      28
+   DATA SIZE        =   ----      30
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
