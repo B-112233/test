@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -20,18 +20,18 @@ line level    source
   10          int qtis, qtis_color, step = 0;
   11          unsigned char flag = 0, flag_t = 1, flag_color = 1, flag_put_color = 0,
   12                                    flag_back = 1, flag_dis = 1, 
-  13                                    flag_black = 0, flag_obj = 0, 
+  13                                    flag_black = 0, flag_obj = 0, flag_obj_t = 0,
   14                                    flag_test_color = 0, flag_turn_r = 0,
   15                                    flag_right = 0, flag_left = 0,
   16                                    flag_black_white_take = 1, flag_take_back = 0, flag_con = 0,
   17                                    flag_bw_back = 0, flag_bw_color = 0, flag_track = 1, flag_interval = 0,
-  18                                    flag_interval_step = 0, flag_put = 0;
+  18                                    flag_interval_step = 0, flag_put = 0, flag_turn = 0;
   19                                    
-  20          unsigned char obj_count = 0, put_obj_count = 0;
+  20          unsigned char obj_count = 0, put_obj_count = 0, take_obj_count = 0;
   21          
   22          void main(void)
   23          {
-  24   1              unsigned char record = 0, j = 0, black_white_count = 0, angle = 0;
+  24   1              unsigned char record = 0, j = 0, black_white_count = 0;
   25   1              int color, i, turn_r_count = 0, turn_r_i = 0;
   26   1              char ii = 0;
   27   1              unsigned int dis;
@@ -51,89 +51,89 @@ line level    source
   41   2      
   42   2                      if(flag_interval_step == 0)
   43   2                      {
-  44   3                              if(qtis == 15)                                    
+  44   3                              if(qtis == 15 && flag_turn == 0)                                          
   45   3                              {
   46   4                                      step = 0;
   47   4                                      record++;
   48   4                                      flag_t = 1;
   49   4                                      switch(record)                          
   50   4                                      {
-  51   5                                              case 1:Fast_forward(12);turn_left_90();break;           //第一次到中心点左转90
-  52   5                                              case 2:Fast_forward(12);turn_right_90();break;
-  53   5                                              case 3:Fast_forward(15);turn_left_45();break;
-  54   5                                              case 4:Fast_forward(15);turn_right_45();break;  
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 2   
+  51   5                                              case 1:Fast_forward(12);turn_left_90();Fast_forward(10);break;          //第一次到中心点左转90
+  52   5                                              case 2:Fast_forward(12);turn_right_90();Fast_forward(10);flag_interval = 1;break;
+  53   5                                              case 3:Fast_forward(15);turn_left_45();Fast_forward(10);break;
+  54   5                                              case 4:Fast_forward(15);turn_right_45();Fast_forward(10);flag_interval = 1;break;       
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 2   
 
   55   5                                              case 5:Fast_forward(15);break;
-  56   5                                              case 6:Fast_forward(15);break;
-  57   5                                              case 7:Fast_forward(15);turn_right_45();break;             
-  58   5                                              case 8:Fast_forward(15);turn_left_45();break;
-  59   5                                              case 9:Fast_forward(10);turn_right_90();break;           
-  60   5                                              case 10:Fast_forward(12);turn_left_90();break;
+  56   5                                              case 6:Fast_forward(15);flag_interval = 1;break;
+  57   5                                              case 7:Fast_forward(15);turn_right_45();Fast_forward(10);break;            
+  58   5                                              case 8:Fast_forward(15);turn_left_45();Fast_forward(10);flag_interval = 1;break;
+  59   5                                              case 9:Fast_forward(10);turn_right_90();Fast_forward(10);break;          
+  60   5                                              case 10:Fast_forward(12);turn_left_90();Fast_forward(10);flag_interval = 1;break;
   61   5                                      }
-  62   4      
-  63   4                                      if (record % 2 == 0 && record > 0)
+  62   4                                      
+  63   4                                      if (record % 2 == 1 && record > 0)
   64   4                                      {
-  65   5                                              Fast_forward(10);
-  66   5                                              flag_put = 1;
-  67   5                                              flag_interval_step = 1;
-  68   5                                              flag = 0;
-  69   5                                      }
-  70   4      
-  71   4                                      if (record % 2 == 1 && record > 0)
-  72   4                                      {
-  73   5                                              flag_dis = 1;
-  74   5                                              flag_color = 1;
-  75   5                                      }
-  76   4                                      else
-  77   4                                      {
-  78   5                                              flag_dis = 0;
-  79   5                                              flag_color = 0;
-  80   5                                      }
-  81   4                                      ii=0;
-  82   4                              }
-  83   3                      }
-  84   2                      
-  85   2                      
-  86   2      
-  87   2                      if (flag_dis == 1)
-  88   2                      {
-  89   3                              InitTimer(); // 给超声波计时
-  90   3                              dis = GetSonarDis();
-  91   3                              if (dis > 6 && dis < 20)
-  92   3                              {
-  93   4                                      flag_obj = 1;
-  94   4                              }
-  95   3                              if (dis > 95 && flag_obj == 1)
-  96   3                              {
-  97   4                                      dis = 0;
-  98   4                              }
-  99   3                      }
- 100   2      
- 101   2                      
- 102   2                      if (dis <= 2 && flag_color == 1 && flag_dis == 1)
- 103   2                      {
- 104   3                              stop();
- 105   3                              flag_test_color = 1;
- 106   3                              flag_color = 0;
- 107   3                              flag_dis = 0;
- 108   3                              flag_obj = 1;
- 109   3                              color = get_color();
- 110   3                              Fast_forward(40);
- 111   3                      }
- 112   2      
- 113   2                      /* 放黄、红、蓝物块 */
- 114   2                      if (flag_test_color)
- 115   2                      {
- 116   3                              if ((color == YELLOW && record == 1) ||
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 3   
+  65   5                                              flag_dis = 1;
+  66   5                                              flag_color = 1;
+  67   5                                      }
+  68   4                                      else
+  69   4                                      {
+  70   5                                              flag_interval_step = 1;
+  71   5                                              flag = 0;
+  72   5                                              flag_dis = 0;
+  73   5                                              flag_color = 0;
+  74   5                                      }
+  75   4                                      ii=0;
+  76   4                              }
+  77   3                      }
+  78   2      
+  79   2                      
+  80   2      
+  81   2                      if (flag_dis == 1)
+  82   2                      {
+  83   3                              InitTimer(); // 给超声波计时
+  84   3                              dis = GetSonarDis();
+  85   3                              if (dis > 5 && dis < 8)
+  86   3                              {
+  87   4                                      flag_obj = 1;
+  88   4                              }
+  89   3                              if (dis > 95 && dis < 110 && flag_obj == 1)
+  90   3                              {
+  91   4                                      dis = 0;
+  92   4                              }
+  93   3                      }
+  94   2      
+  95   2      
+  96   2                      if (dis < 3 && flag_color == 1 && flag_dis == 1)
+  97   2                      {
+  98   3                              stop();
+  99   3                              take_obj_count++;
+ 100   3                              if(take_obj_count == 3)
+ 101   3                              {
+ 102   4                                      flag_turn = 2;
+ 103   4                              }
+ 104   3                              flag_test_color = 1;
+ 105   3                              flag_color = 0;
+ 106   3                              flag_dis = 0;
+ 107   3                              flag_obj = 1;
+ 108   3                              color = get_color();
+ 109   3                              Fast_forward(50);
+ 110   3                      }
+ 111   2      
+ 112   2                      /* 放黄、红、蓝物块 */
+ 113   2                      if (flag_test_color)
+ 114   2                      {
+ 115   3                              if ((color == YELLOW && record == 1) ||
+ 116   3                                      (color == WHITE && record == 3) ||
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 3   
 
- 117   3                                      (color == WHITE && record == 3) ||
- 118   3                                      (color == RED && record == 5) ||
- 119   3                                      (color == BLACK && record == 7) ||
- 120   3                                      (color == BLUE && record == 9))
- 121   3                              {
- 122   4                                      flag_put_color = 1;
+ 117   3                                      (color == RED && record == 5) ||
+ 118   3                                      (color == BLACK && record == 7) ||
+ 119   3                                      (color == BLUE && record == 9))
+ 120   3                              {
+ 121   4                                      flag_put_color = 1;
+ 122   4                                      flag_turn = 1;
  123   4      
  124   4                                      if(color == WHITE || color == RED || color == BLACK)
  125   4                                      {
@@ -147,830 +147,911 @@ line level    source
  133   6                                                      obj_count++;
  134   6                                                      flag_put_color = 0;
  135   6                                                      flag_test_color = 0;
- 136   6                                                      color = 0;
- 137   6                                                      ii = 0;
- 138   6                                              }
- 139   5                                      }
- 140   4                                      if(color == YELLOW)
- 141   4                                      {
- 142   5                                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
- 143   5                                              {
- 144   6                                                      flag_track = 0;
- 145   6                                                      Fast_forward(18);
- 146   6                                                      for(turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 147   6                                                      {
- 148   7                                                      turn_r(1510, 1510);
- 149   7                                                      }
- 150   6                                                      stop();
- 151   6                                                      back(30);
- 152   6                                                      turn_back();
- 153   6                                                      flag_track = 1;
- 154   6                                                      obj_count++;
- 155   6                                                      flag_put_color = 0;
- 156   6                                                      flag_test_color = 0;
- 157   6                                                      color = 0;
- 158   6                                              }
- 159   5      
- 160   5                                              /*防止冲出地图*/
- 161   5                                              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
- 162   5                                              {
- 163   6                                                      flag_track = 0;
- 164   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 165   6                                                      {
- 166   7                                                              turn_r(1510, 1510);
- 167   7                                                      }
- 168   6                                                      stop();
- 169   6                                                      back(30);
- 170   6                                                      turn_back();
- 171   6                                                      flag_track = 1;
- 172   6                                                      obj_count++;
- 173   6                                                      flag_put_color = 0;
- 174   6                                                      flag_test_color = 0;
- 175   6                                                      color = 0;
- 176   6                                              }
- 177   5                                      }
- 178   4      
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 4   
+ 136   6                                                      flag_obj_t = 1;
+ 137   6                                                      color = 0;
+ 138   6                                                      record++;
+ 139   6                                                      ii = 0;
+ 140   6                                              }
+ 141   5                                      }
+ 142   4                                      if(color == YELLOW)
+ 143   4                                      {
+ 144   5                                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
+ 145   5                                              {
+ 146   6                                                      flag_track = 0;
+ 147   6                                                      Fast_forward(18);
+ 148   6                                                      for(turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 149   6                                                      {
+ 150   7                                                      turn_r(1510, 1510);
+ 151   7                                                      }
+ 152   6                                                      stop();
+ 153   6                                                      back(30);
+ 154   6                                                      turn_back();
+ 155   6                                                      flag_track = 1;
+ 156   6                                                      obj_count++;
+ 157   6                                                      flag_put_color = 0;
+ 158   6                                                      flag_test_color = 0;
+ 159   6                                                      flag_obj_t = 1;
+ 160   6                                                      color = 0;
+ 161   6                                                      record++;
+ 162   6                                              }
+ 163   5      
+ 164   5                                              /*防止冲出地图*/
+ 165   5                                              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 166   5                                              {
+ 167   6                                                      flag_track = 0;
+ 168   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 169   6                                                      {
+ 170   7                                                              turn_r(1510, 1510);
+ 171   7                                                      }
+ 172   6                                                      stop();
+ 173   6                                                      back(30);
+ 174   6                                                      turn_back();
+ 175   6                                                      flag_track = 1;
+ 176   6                                                      obj_count++;
+ 177   6                                                      flag_put_color = 0;
+ 178   6                                                      flag_test_color = 0;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 4   
 
- 179   4                                      if(color == BLUE)
- 180   4                                      {
- 181   5                                              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
- 182   5                                              {
- 183   6                                                      
- 184   6                                                      flag_track = 0;
- 185   6                                                      Fast_forward(18);
- 186   6                                                      stop();
- 187   6                                                      back(30);
- 188   6                                                      turn_back();
- 189   6                                                      flag_track = 1;
- 190   6                                                      obj_count++;
- 191   6                                                      flag_put_color = 0;
- 192   6                                                      flag_test_color = 0;
- 193   6                                                      color = 0;
- 194   6                                              }
- 195   5                                              /*防止冲出地图*/
- 196   5                                              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
- 197   5                                              {
- 198   6      
- 199   6                                                      flag_track = 0;
- 200   6                                                      stop();
- 201   6                                                      back(30);
- 202   6                                                      turn_back();
- 203   6                                                      flag_track = 1;
- 204   6                                                      obj_count++;
- 205   6                                                      flag_put_color = 0;
- 206   6                                                      flag_test_color = 0;
- 207   6                                                      color = 0;
- 208   6                                              }
- 209   5                                      }
- 210   4                                      
- 211   4                                      /* 4 qtis */
- 212   4                                      // if (qtis == 0)
- 213   4                                      //      ii++;
- 214   4                                      // if (ii > 2 && qtis == 0 && color != 0)
- 215   4                                      // {
- 216   4                                      //      back(30);
- 217   4                                      //      turn_back();
- 218   4                                      //      obj_count++;
- 219   4                                      //      flag_test_color = 0;
- 220   4                                      //      color = 0;
- 221   4                                      //      ii = 0;
- 222   4                                      // }
- 223   4                              }
- 224   3                              else
- 225   3                              {
- 226   4                                      Fast_forward(20);
- 227   4                                      turn_back();
- 228   4                                      flag_test_color = 0;
- 229   4                              }
- 230   3                      }
- 231   2                      
- 232   2      
- 233   2      
- 234   2                      if (record % 2 == 1 && flag_obj == 0)
- 235   2                      {
- 236   3                              if (qtis == 0)
- 237   3                                      ii++;
- 238   3                              if (ii > 2 && (qtis == 0 || qtis == 10 || qtis == 5 || qtis == 9 || qtis == 11 || qtis == 13) && flag_t
+ 179   6                                                      flag_obj_t = 1;
+ 180   6                                                      color = 0;
+ 181   6                                                      record++;
+ 182   6                                              }
+ 183   5                                      }
+ 184   4      
+ 185   4                                      if(color == BLUE)
+ 186   4                                      {
+ 187   5                                              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
+ 188   5                                              {
+ 189   6                                                      
+ 190   6                                                      flag_track = 0;
+ 191   6                                                      Fast_forward(18);
+ 192   6                                                      stop();
+ 193   6                                                      back(30);
+ 194   6                                                      turn_back();
+ 195   6                                                      flag_track = 1;
+ 196   6                                                      obj_count++;
+ 197   6                                                      flag_put_color = 0;
+ 198   6                                                      flag_test_color = 0;
+ 199   6                                                      flag_obj_t = 1;
+ 200   6                                                      color = 0;
+ 201   6                                                      record++;
+ 202   6                                              }
+ 203   5                                              /*防止冲出地图*/
+ 204   5                                              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 205   5                                              {
+ 206   6      
+ 207   6                                                      flag_track = 0;
+ 208   6                                                      stop();
+ 209   6                                                      back(30);
+ 210   6                                                      turn_back();
+ 211   6                                                      flag_track = 1;
+ 212   6                                                      obj_count++;
+ 213   6                                                      flag_put_color = 0;
+ 214   6                                                      flag_test_color = 0;
+ 215   6                                                      flag_obj_t = 1;
+ 216   6                                                      color = 0;
+ 217   6                                                      record++;
+ 218   6                                              }
+ 219   5                                      }
+ 220   4                                      
+ 221   4                                      /* 4 qtis */
+ 222   4                                      // if (qtis == 0)
+ 223   4                                      //      ii++;
+ 224   4                                      // if (ii > 2 && qtis == 0 && color != 0)
+ 225   4                                      // {
+ 226   4                                      //      back(30);
+ 227   4                                      //      turn_back();
+ 228   4                                      //      obj_count++;
+ 229   4                                      //      flag_test_color = 0;
+ 230   4                                      //      color = 0;
+ 231   4                                      //      ii = 0;
+ 232   4                                      // }
+ 233   4                              }
+ 234   3                              else
+ 235   3                              {
+ 236   4                                      Fast_forward(20);
+ 237   4                                      turn_back();
+ 238   4                                      flag_test_color = 0;
+ 239   4                              }
+ 240   3                      }
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 5   
+
+ 241   2                      
+ 242   2      
+ 243   2      
+ 244   2                      if (record % 2 == 1 && flag_obj == 0)
+ 245   2                      {
+ 246   3                              if (qtis == 0)
+ 247   3                                      ii++;
+ 248   3                              if (ii > 2 && (qtis == 0 || qtis == 10 || qtis == 5 || qtis == 9 || qtis == 11 || qtis == 13) && flag_t
              - == 1)
- 239   3                              {
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 5   
-
- 240   4                                      flag_t = 0;
- 241   4                                      Fast_forward(40);
- 242   4                                      turn_back();
- 243   4                                      ii = 0;
- 244   4                              }
- 245   3                      }
- 246   2                      
- 247   2                      if(qtis == 15 && flag_put == 1)
- 248   2                      {
- 249   3                              put_obj_count++;
- 250   3                              step = 0;
- 251   3                              switch(put_obj_count)                           
- 252   3                              {
- 253   4                                      case 1:turn_right_90();turn_right_45();break;
- 254   4                                      case 2:turn_left_120();flag_put = 0;break;
- 255   4                                      case 3:turn_left_90();turn_left_45();break;
- 256   4                                      case 4:turn_right_120();flag_put = 0;break;
- 257   4                                      case 5:stop();back(30);turn_back();break;
- 258   4                              }
- 259   3                      }
- 260   2      
- 261   2                      if(step > 15 && put_obj_count == 1 && flag_put == 1)
- 262   2                      {
- 263   3                              step = 0;
- 264   3                              back(30);
- 265   3                              turn_back_r();
- 266   3                      }
- 267   2      
- 268   2                      if (step > 15 && put_obj_count == 3 && flag_put == 1)
- 269   2                      {
- 270   3                              step = 0; 
- 271   3                              back(30);
- 272   3                              turn_back();
- 273   3                      }
- 274   2      
- 275   2                      /*把物体间隔放到缓冲区*/
- 276   2                      // if(record % 2 == 0 && record > 0 && flag == 0)
- 277   2                      // {
- 278   2      
- 279   2                      //      static unsigned char interval_step = 0;
- 280   2      
- 281   2                      //      j = 4;
+ 249   3                              {
+ 250   4                                      flag_t = 0;
+ 251   4                                      flag_turn = 1;
+ 252   4                                      Fast_forward(60);
+ 253   4                                      turn_back();
+ 254   4                                      record++;
+ 255   4                                      ii = 0;
+ 256   4                              }
+ 257   3                      }
+ 258   2                      
+ 259   2                      // if(qtis == 15 && flag_put == 1)
+ 260   2                      // {
+ 261   2                      //      put_obj_count++;
+ 262   2                      //      step = 0;
+ 263   2                      //      switch(put_obj_count)                           
+ 264   2                      //      {
+ 265   2                      //              case 1:turn_right_90();turn_right_45();break;
+ 266   2                      //              case 2:turn_left_120();flag_put = 0;break;
+ 267   2                      //              case 3:turn_left_90();turn_left_45();break;
+ 268   2                      //              case 4:turn_right_120();flag_put = 0;break;
+ 269   2                      //              case 5:stop();back(30);turn_back();break;
+ 270   2                      //      }
+ 271   2                      // }
+ 272   2      
+ 273   2                      // if(step > 15 && put_obj_count == 1 && flag_put == 1)
+ 274   2                      // {
+ 275   2                      //      step = 0;
+ 276   2                      //      back(30);
+ 277   2                      //      turn_back_r();
+ 278   2                      //      flag_interval_step = 0;
+ 279   2                      //      flag_obj = 0;
+ 280   2                      //      flag = 1;
+ 281   2                      // }
  282   2      
- 283   2                      //      interval_step++;         
- 284   2                      //      if(interval_step > (35 - j * 5)) 
- 285   2                      //      {
- 286   2                      //              back(15);
- 287   2                      //              turn_back();
- 288   2                      //              Fast_forward(20);
- 289   2                      //              flag_interval_step = 0;
- 290   2                      //              flag_obj = 0;
- 291   2                      //              flag = 1;
- 292   2                      //              interval_step = 0;
- 293   2                      //              j++;
- 294   2                      //      }
- 295   2                      //      // if(interval_step > 5 && flag_obj == 0)
- 296   2                      //      // {
- 297   2                      //      //      flag_interval_step = 0;
- 298   2                      //      //      interval_step = 0;
- 299   2                      //      // }
- 300   2                      //      flag_dis = 0;
- 301   2                      //      flag_color = 0;
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 6   
+ 283   2                      // if (step > 15 && put_obj_count == 3 && flag_put == 1)
+ 284   2                      // {
+ 285   2                      //      step = 0; 
+ 286   2                      //      back(30);
+ 287   2                      //      turn_back();
+ 288   2                      //      flag_interval_step = 0;
+ 289   2                      //      flag_obj = 0;
+ 290   2                      //      flag = 1;
+ 291   2                      // }
+ 292   2      
+ 293   2                      /*把物体间隔放到缓冲区*/
+ 294   2                      if(record % 2 == 0 && record > 0 && flag == 0 && flag_obj == 1 && flag_interval == 1)
+ 295   2                      {
+ 296   3                              static unsigned char interval_step = 0;
+ 297   3                              if(step > (200 - j * 40)) 
+ 298   3                              {
+ 299   4                                      back(30);
+ 300   4                                      turn_back();
+ 301   4                                      flag_obj = 0;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 6   
 
- 302   2                      // }
- 303   2                      
- 304   2                      // if(j == 5 && qtis == 15)                             
- 305   2                      // {
- 306   2                      //      // flag = 0;
- 307   2                      //      // back(30);
- 308   2                      //      turn_back();
- 309   2                      //      break;
- 310   2                      //      //turn_right_90();
- 311   2                      //      //stop();
- 312   2                      // }
- 313   2              }
- 314   1      
- 315   1              
- 316   1              /* 第二部分 判断颜色 搬到指定地点*/
- 317   1              flag_dis = 1;   // 测距离标志位
- 318   1              flag_black = 0; // 黑色物块标志位
- 319   1              flag_color = 1; // 颜色检查标志位
- 320   1              flag_obj = 0;   // 是否有物块
- 321   1              flag_put_color = 0;             //放置物块标志位
- 322   1              flag_track = 1;         //循迹标志位
- 323   1              flag_interval_step = 1;
- 324   1              ii = 0;
- 325   1              if(obj_count != 3)
- 326   1              {
- 327   2                      while(1)
- 328   2                      {
- 329   3                              
- 330   3                              
- 331   3                              // 测试超声波
- 332   3                              //              printf("ultrasonic = %d\n", dis);
- 333   3                              //              delay_nms(1000);
- 334   3      
- 335   3      
- 336   3                              // 循迹
- 337   3                              if(flag_track == 1)
- 338   3                              {
- 339   4                                      tracking();
- 340   4                              }
- 341   3      
- 342   3                              if (flag_dis == 1)
- 343   3                              {
- 344   4                                      InitTimer(); // 给超声波计时
- 345   4                                      dis = GetSonarDis();
- 346   4                                      
- 347   4                                      if (dis > 6 && dis < 20)
- 348   4                                      {
- 349   5                                              flag_obj = 1;
- 350   5                                      }
- 351   4      
- 352   4                                      if (dis > 95 && flag_obj == 1)
- 353   4                                      {
- 354   5                                              dis = 0;
- 355   5                                      }
- 356   4                              }
- 357   3      
- 358   3                              // dis <= 2时判断颜色，获取颜色
- 359   3                              if(dis < 3 && flag_color == 1 && flag_dis == 1)
- 360   3                              {
- 361   4                                      stop();
- 362   4                                      color = get_color();
- 363   4                                      turn_back();
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 7   
+ 302   4                                      flag = 1;
+ 303   4                                      step = 0;
+ 304   4                                      flag_interval = 0;
+ 305   4                                      j++;
+ 306   4                              }
+ 307   3      
+ 308   3                              flag_dis = 0;
+ 309   3                              flag_color = 0;
+ 310   3                      }
+ 311   2                      else if(record % 2 == 0 && record > 0 && flag == 0 && flag_turn == 1)
+ 312   2                      {
+ 313   3                              if(qtis == 15)
+ 314   3                              {
+ 315   4                                      step = 0;
+ 316   4                                      flag_t = 1;
+ 317   4                                      switch(record)                          
+ 318   4                                      {
+ 319   5                                              case 2:Fast_forward(12);turn_left_90();turn_left_45();Fast_forward(20);break;
+ 320   5                                              case 4:Fast_forward(15);turn_left_90();turn_left_45();Fast_forward(20);break;   
+ 321   5                                              case 6:Fast_forward(15);turn_back();turn_right_45();Fast_forward(20);break;
+ 322   5                                              case 8:Fast_forward(15);turn_left_45();turn_left_90();Fast_forward(20);break;
+ 323   5                                              case 10:Fast_forward(12);turn_left_90();Fast_forward(20);break;
+ 324   5                                      }
+ 325   4                                      record++;
+ 326   4                                      if (record % 2 == 1 && record > 0)
+ 327   4                                      {
+ 328   5                                              flag_dis = 1;
+ 329   5                                              flag_color = 1;
+ 330   5                                      }
+ 331   4                                      else
+ 332   4                                      {
+ 333   5                                              flag_interval_step = 1;
+ 334   5                                              flag = 0;
+ 335   5                                              flag_dis = 0;
+ 336   5                                              flag_color = 0;
+ 337   5                                      }
+ 338   4                                      ii = 0;
+ 339   4      
+ 340   4                                      flag_turn = 0;
+ 341   4                              }
+ 342   3                              // if(step > 120)
+ 343   3                              // {
+ 344   3                              //      step = 0;
+ 345   3                              //      turn_back();
+ 346   3                              //      flag_interval_step = 0;
+ 347   3                              //      flag_obj_t = 0;
+ 348   3                              //      flag_obj = 0;
+ 349   3                              //      flag = 1;
+ 350   3                              //      flag_dis = 0;
+ 351   3                              //      flag_color = 0;
+ 352   3                              // }
+ 353   3                      }
+ 354   2      
+ 355   2                      if (step > 20 && flag == 1 && flag_obj == 0)
+ 356   2                      {
+ 357   3                              step = 0;
+ 358   3                              flag_interval_step = 0;
+ 359   3                      }
+ 360   2      
+ 361   2                      if(take_obj_count == 3)
+ 362   2                      {
+ 363   3                              if(qtis == 15 && flag_turn == 3)
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 7   
 
- 364   4                                      Fast_forward(20);
- 365   4                                      flag_interval_step = 0;
- 366   4                                      flag_obj = 1;
- 367   4                                      flag_color = 0;
- 368   4                                      flag_back = 0;
- 369   4                                      flag_dis = 0;
- 370   4                              }
- 371   3      
- 372   3                              if(flag_interval_step == 0)
- 373   3                              {
- 374   4                                      if (qtis == 15 && flag_back == 0)
- 375   4                                      {
- 376   5                                              step = 0;
- 377   5                                              ii = 0;
- 378   5                                              switch (color)
- 379   5                                              {
- 380   6                                                      case YELLOW:Fast_forward(12);turn_left_90();break;
- 381   6                                                      case WHITE:Fast_forward(15);turn_left_45();break;
- 382   6                                                      case RED:Fast_forward(15);break;
- 383   6                                                      case BLACK:Fast_forward(15);turn_right_45();break;
- 384   6                                                      case BLUE:Fast_forward(15);turn_right_90();break;
- 385   6                                              }
- 386   5                                              flag_put_color = 1;
- 387   5                                      }
- 388   4                              }
- 389   3                              
- 390   3      
- 391   3                              //放到对应位置，flag_back置1
- 392   3                              // if(flag_black == 1)
- 393   3                              // {
- 394   3                              //      if (step >= 55)
- 395   3                              //      {
- 396   3                              //              back(30);
- 397   3                              //              turn_back();
- 398   3                              //              step = 0;
- 399   3                              //              flag_back = 1;
- 400   3                              //              flag_black = 0;
- 401   3                              //      }
- 402   3                              // }
- 403   3                              
- 404   3      
- 405   3                              if(step >= 30)
- 406   3                              {
- 407   4                                      // if ((qtis_color == 16 || qtis_color == 32 || qtis_color == 48) && flag_put_color == 1)
- 408   4                                      // {
- 409   4                                      //      stop();
- 410   4                                      //      Fast_forward(15);
- 411   4                                      //      back(30);
- 412   4                                      //      turn_back();
- 413   4                                      //      obj_count++;
- 414   4                                      //      step = 0;
- 415   4                                      //      flag_put_color = 0;
- 416   4                                      //      flag_obj = 0;
- 417   4                                      //      flag_back = 1;
- 418   4                                      //      ii = 0;
- 419   4                                      // }
- 420   4                                      if (color == WHITE || color == RED || color == BLACK)
- 421   4                                      {
- 422   5                                              if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
- 423   5                                              {
- 424   6                                                      flag_track = 0;
- 425   6                                                      Fast_forward(3);
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 8   
+ 364   3                              {
+ 365   4                                      step = 0;
+ 366   4                                      switch(record)                          
+ 367   4                                      {
+ 368   5                                              case 2:Fast_forward(12);turn_left_90();Fast_forward(20);break;
+ 369   5                                              case 4:Fast_forward(15);turn_left_90();turn_left_45();Fast_forward(20);break;   
+ 370   5                                              case 6:Fast_forward(15);turn_back();Fast_forward(20);break;
+ 371   5                                              case 8:Fast_forward(15);turn_right_45();turn_right_90();Fast_forward(20);break;
+ 372   5                                              case 10:Fast_forward(12);turn_right_90();Fast_forward(20);break;
+ 373   5                                      }
+ 374   4                                      back(30);
+ 375   4                                      break;
+ 376   4                              }
+ 377   3                      }
+ 378   2      
+ 379   2      
+ 380   2                      // if((j + obj_count) == 3 && qtis == 15)                               
+ 381   2                      // {
+ 382   2                      //      // flag = 0;
+ 383   2                      //      // back(30);
+ 384   2                      //      turn_back();
+ 385   2                      //      break;
+ 386   2                      //      //turn_right_90();
+ 387   2                      //      //stop();
+ 388   2                      // }
+ 389   2      
+ 390   2              }
+ 391   1      
+ 392   1              
+ 393   1              /* 第二部分 判断颜色 搬到指定地点*/
+ 394   1              flag_dis = 1;   // 测距离标志位
+ 395   1              flag_black = 0; // 黑色物块标志位
+ 396   1              flag_color = 1; // 颜色检查标志位
+ 397   1              flag_obj = 0;   // 是否有物块
+ 398   1              flag_put_color = 0;             //放置物块标志位
+ 399   1              flag_track = 1;         //循迹标志位
+ 400   1              flag_interval_step = 1;
+ 401   1              ii = 0;
+ 402   1              if(obj_count != 3)
+ 403   1              {
+ 404   2                      while(1)
+ 405   2                      {
+ 406   3                              // 循迹
+ 407   3                              if(flag_track == 1)
+ 408   3                              {
+ 409   4                                      tracking();
+ 410   4                              }
+ 411   3      
+ 412   3                              if (flag_dis == 1)
+ 413   3                              {
+ 414   4                                      InitTimer(); // 给超声波计时
+ 415   4                                      dis = GetSonarDis();
+ 416   4                                      
+ 417   4                                      if (dis > 6 && dis < 20)
+ 418   4                                      {
+ 419   5                                              flag_obj = 1;
+ 420   5                                      }
+ 421   4      
+ 422   4                                      if (dis > 95 && flag_obj == 1)
+ 423   4                                      {
+ 424   5                                              dis = 0;
+ 425   5                                      }
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 8   
 
- 426   6                                                      stop();
- 427   6                                                      back(30);
- 428   6                                                      turn_back();
- 429   6                                                      flag_track = 1;
- 430   6                                                      obj_count++;
- 431   6                                                      step = 0;
- 432   6                                                      flag_obj = 0;
- 433   6                                                      flag_back = 1;
- 434   6                                                      flag_put_color = 0;
- 435   6                                              }
- 436   5                                      }
- 437   4      
- 438   4                                      if (color == YELLOW)
- 439   4                                      {
- 440   5                                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
- 441   5                                              {
- 442   6                                                      flag_track = 0;
- 443   6                                                      Fast_forward(15);
- 444   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 445   6                                                      {
- 446   7                                                              turn_r(1510, 1510);
- 447   7                                                      }
- 448   6                                                      stop();
- 449   6                                                      back(30);
- 450   6                                                      turn_back();
- 451   6                                                      flag_track = 1;
- 452   6                                                      obj_count++;
- 453   6                                                      step = 0;
- 454   6                                                      flag_obj = 0;
- 455   6                                                      flag_back = 1;
- 456   6                                                      flag_put_color = 0;
- 457   6                                              }
- 458   5      
- 459   5                                              /*防止冲出地图*/
- 460   5                                              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
- 461   5                                              {
- 462   6                                                      flag_track = 0;
- 463   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 464   6                                                      {
- 465   7                                                              turn_r(1510, 1510);
- 466   7                                                      }
- 467   6                                                      stop();
- 468   6                                                      back(30);
- 469   6                                                      turn_back();
- 470   6                                                      flag_track = 1;
- 471   6                                                      obj_count++;
- 472   6                                                      step = 0;
- 473   6                                                      flag_obj = 0;
- 474   6                                                      flag_back = 1;
- 475   6                                                      flag_put_color = 0;
- 476   6                                              }
- 477   5                                      }
- 478   4      
- 479   4                                      if (color == BLUE)
- 480   4                                      {
- 481   5                                              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
- 482   5                                              {
- 483   6      
- 484   6                                                      flag_track = 0;
- 485   6                                                      Fast_forward(10);
- 486   6                                                      stop();
- 487   6                                                      back(30);
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 9   
+ 426   4                              }
+ 427   3      
+ 428   3                              // dis <= 2时判断颜色，获取颜色
+ 429   3                              if(dis < 3 && flag_color == 1 && flag_dis == 1)
+ 430   3                              {
+ 431   4                                      stop();
+ 432   4                                      color = get_color();
+ 433   4                                      turn_back();
+ 434   4                                      Fast_forward(20);
+ 435   4                                      flag_obj = 1;
+ 436   4                                      flag_color = 0;
+ 437   4                                      flag_back = 0;
+ 438   4                                      flag_dis = 0;
+ 439   4                              }
+ 440   3      
+ 441   3                              if (step > 10 && flag_back == 0 && flag_obj == 0)
+ 442   3                              {
+ 443   4                                      step = 0;
+ 444   4                                      flag_interval_step = 0;
+ 445   4                              }
+ 446   3      
+ 447   3                              if(flag_interval_step == 0)
+ 448   3                              {
+ 449   4                                      if (qtis == 15 && flag_back == 0)
+ 450   4                                      {
+ 451   5                                              step = 0;
+ 452   5                                              ii = 0;
+ 453   5                                              switch (color)
+ 454   5                                              {
+ 455   6                                                      case YELLOW:Fast_forward(12);turn_left_90();break;
+ 456   6                                                      case WHITE:Fast_forward(15);turn_left_45();break;
+ 457   6                                                      case RED:Fast_forward(15);break;
+ 458   6                                                      case BLACK:Fast_forward(15);turn_right_45();break;
+ 459   6                                                      case BLUE:Fast_forward(15);turn_right_90();break;
+ 460   6                                              }
+ 461   5                                              flag_put_color = 1;
+ 462   5                                      }
+ 463   4                              }
+ 464   3                              
+ 465   3                              //放到对应位置，flag_back置1
+ 466   3                              // if(flag_black == 1)
+ 467   3                              // {
+ 468   3                              //      if (step >= 55)
+ 469   3                              //      {
+ 470   3                              //              back(30);
+ 471   3                              //              turn_back();
+ 472   3                              //              step = 0;
+ 473   3                              //              flag_back = 1;
+ 474   3                              //              flag_black = 0;
+ 475   3                              //      }
+ 476   3                              // }
+ 477   3                              
+ 478   3      
+ 479   3                              if(step >= 30)
+ 480   3                              {
+ 481   4                                      // if ((qtis_color == 16 || qtis_color == 32 || qtis_color == 48) && flag_put_color == 1)
+ 482   4                                      // {
+ 483   4                                      //      stop();
+ 484   4                                      //      Fast_forward(15);
+ 485   4                                      //      back(30);
+ 486   4                                      //      turn_back();
+ 487   4                                      //      obj_count++;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 9   
 
- 488   6                                                      turn_back();
- 489   6                                                      flag_track = 1;
- 490   6                                                      obj_count++;
- 491   6                                                      step = 0;
- 492   6                                                      flag_obj = 0;
- 493   6                                                      flag_back = 1;
- 494   6                                                      flag_put_color = 0;
- 495   6                                              }
- 496   5                                              /*防止冲出地图*/
- 497   5                                              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
- 498   5                                              {
- 499   6      
- 500   6                                                      flag_track = 0;
- 501   6                                                      stop();
- 502   6                                                      back(30);
- 503   6                                                      turn_back();
- 504   6                                                      flag_track = 1;
- 505   6                                                      obj_count++;
- 506   6                                                      step = 0;
- 507   6                                                      flag_obj = 0;
- 508   6                                                      flag_back = 1;
- 509   6                                                      flag_put_color = 0;
- 510   6                                                      flag_test_color = 0;
- 511   6                                              }
- 512   5                                      }
- 513   4      
- 514   4                                      // if (qtis == 0)
- 515   4                                      //      ii++;
- 516   4                                      // if (ii > 2 && qtis == 0)
- 517   4                                      // {
- 518   4                                      //      back(30);
- 519   4                                      //      turn_back();
- 520   4                                      //      obj_count++;
- 521   4                                      //      step = 0;
- 522   4                                      //      flag_obj = 0;
- 523   4                                      //      flag_back = 1;
- 524   4                                      //      ii = 0;
- 525   4                                      // }
- 526   4                              }
- 527   3                              
- 528   3                              if(flag_interval_step == 0)
- 529   3                              {
- 530   4                                      if (qtis == 15 && flag_back == 1)
- 531   4                                      {
- 532   5                                              flag_dis = 1;
- 533   5                                              flag_color = 1;
- 534   5                                              step = 0;
- 535   5                                              switch (color)
- 536   5                                              {
- 537   6                                                      case YELLOW:Fast_forward(12);turn_right_90();break;
- 538   6                                                      case WHITE:Fast_forward(20);turn_right_45();break;
- 539   6                                                      case RED:Fast_forward(15);break;
- 540   6                                                      case BLACK:Fast_forward(18);turn_left_45();break;
- 541   6                                                      case BLUE:Fast_forward(12);turn_left_90();break;
- 542   6                                              }
- 543   5      
- 544   5                                              color = 0;
- 545   5                                              if (obj_count == 3 && step > 10) // 搬完三个回来，准备搬运黑白
- 546   5                                              {
- 547   6                                                      step = 0;
- 548   6                                                      break;
- 549   6                                              }
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 10  
+ 488   4                                      //      step = 0;
+ 489   4                                      //      flag_put_color = 0;
+ 490   4                                      //      flag_obj = 0;
+ 491   4                                      //      flag_back = 1;
+ 492   4                                      //      ii = 0;
+ 493   4                                      // }
+ 494   4                                      if (color == WHITE || color == RED || color == BLACK)
+ 495   4                                      {
+ 496   5                                              if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
+ 497   5                                              {
+ 498   6                                                      flag_track = 0;
+ 499   6                                                      Fast_forward(3);
+ 500   6                                                      stop();
+ 501   6                                                      back(30);
+ 502   6                                                      turn_back();
+ 503   6                                                      flag_track = 1;
+ 504   6                                                      obj_count++;
+ 505   6                                                      step = 0;
+ 506   6                                                      flag_obj = 0;
+ 507   6                                                      flag_back = 1;
+ 508   6                                                      flag_put_color = 0;
+ 509   6                                              }
+ 510   5                                      }
+ 511   4      
+ 512   4                                      if (color == YELLOW)
+ 513   4                                      {
+ 514   5                                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
+ 515   5                                              {
+ 516   6                                                      flag_track = 0;
+ 517   6                                                      Fast_forward(15);
+ 518   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 519   6                                                      {
+ 520   7                                                              turn_r(1510, 1510);
+ 521   7                                                      }
+ 522   6                                                      stop();
+ 523   6                                                      back(30);
+ 524   6                                                      turn_back();
+ 525   6                                                      flag_track = 1;
+ 526   6                                                      obj_count++;
+ 527   6                                                      step = 0;
+ 528   6                                                      flag_obj = 0;
+ 529   6                                                      flag_back = 1;
+ 530   6                                                      flag_put_color = 0;
+ 531   6                                              }
+ 532   5      
+ 533   5                                              /*防止冲出地图*/
+ 534   5                                              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 535   5                                              {
+ 536   6                                                      flag_track = 0;
+ 537   6                                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 538   6                                                      {
+ 539   7                                                              turn_r(1510, 1510);
+ 540   7                                                      }
+ 541   6                                                      stop();
+ 542   6                                                      back(30);
+ 543   6                                                      turn_back();
+ 544   6                                                      flag_track = 1;
+ 545   6                                                      obj_count++;
+ 546   6                                                      step = 0;
+ 547   6                                                      flag_obj = 0;
+ 548   6                                                      flag_back = 1;
+ 549   6                                                      flag_put_color = 0;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 10  
 
- 550   5                                      }
- 551   4                              }
- 552   3                      }
- 553   2              }
- 554   1              
- 555   1      
- 556   1              /*第三阶段 搬运黑白物块*/
- 557   1              flag_dis = 0;   // 测距离标志位
- 558   1              flag_black = 0; // 黑色物块标志位
- 559   1              flag_color = 0; // 颜色检查标志位
- 560   1              flag_obj = 0;   // 是否有物块
- 561   1              flag_black_white_take = 1;      //标志取到黑白物块
- 562   1              flag_back = 0;          //返回标志位
- 563   1              obj_count = 0;
- 564   1              color = 0;
- 565   1              dis = 100;
- 566   1              ii = 0;
- 567   1              step = 0;
- 568   1              turn_back();
- 569   1              while(1)
- 570   1              {
- 571   2                      // 循迹
- 572   2                      if(flag_track == 1)
- 573   2                      {
- 574   3                              tracking();
- 575   3                      }
- 576   2      
- 577   2                      if(qtis == 15 && flag_black_white_take == 1)
- 578   2                      {
- 579   3                              Fast_forward(12);
- 580   3                              turn_right_90();
- 581   3                              flag_turn_r = 1;
- 582   3                      }
- 583   2                      
- 584   2                      if(flag_turn_r == 1)
- 585   2                      {
- 586   3                              turn_r_count = 0;
- 587   3                              for(i=0; i < 200; i++)               //利用超声波搜索第五个物块500
- 588   3                              {                       
- 589   4                                      InitTimer();  //定时器初始化
- 590   4                                      dis = GetSonarDis(); //启动超声波
- 591   4                                      //printf("m = : %d\n",m);
- 592   4                                      delay_nms(100);
- 593   4                                      turn_r(1540,1540); //微转动
- 594   4                                      
- 595   4                                      if(dis >= 10 && dis < 20)
- 596   4                                      {
- 597   5                                              turn_r_count = i;
- 598   5                                              if(black_white_count > 5)  //有几次次检测到物块，则前进80步，取下物块。
- 599   5                                              {
- 600   6                                                      stop();
- 601   6                                                      Fast_forward(98);
- 602   6                                                      flag_black_white_take = 0;
- 603   6                                                      flag_bw_back = 1;
- 604   6                                                      break;
- 605   6                                              }
- 606   5                                              black_white_count++;
- 607   5                                      }
- 608   4                              }
- 609   3                              flag_turn_r = 0;
- 610   3                      }
- 611   2                      if (turn_r_count > 30)
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 11  
+ 550   6                                              }
+ 551   5                                      }
+ 552   4      
+ 553   4                                      if (color == BLUE)
+ 554   4                                      {
+ 555   5                                              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
+ 556   5                                              {
+ 557   6      
+ 558   6                                                      flag_track = 0;
+ 559   6                                                      Fast_forward(10);
+ 560   6                                                      stop();
+ 561   6                                                      back(30);
+ 562   6                                                      turn_back();
+ 563   6                                                      flag_track = 1;
+ 564   6                                                      obj_count++;
+ 565   6                                                      step = 0;
+ 566   6                                                      flag_obj = 0;
+ 567   6                                                      flag_back = 1;
+ 568   6                                                      flag_put_color = 0;
+ 569   6                                              }
+ 570   5                                              /*防止冲出地图*/
+ 571   5                                              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 572   5                                              {
+ 573   6      
+ 574   6                                                      flag_track = 0;
+ 575   6                                                      stop();
+ 576   6                                                      back(30);
+ 577   6                                                      turn_back();
+ 578   6                                                      flag_track = 1;
+ 579   6                                                      obj_count++;
+ 580   6                                                      step = 0;
+ 581   6                                                      flag_obj = 0;
+ 582   6                                                      flag_back = 1;
+ 583   6                                                      flag_put_color = 0;
+ 584   6                                                      flag_test_color = 0;
+ 585   6                                              }
+ 586   5                                      }
+ 587   4      
+ 588   4                                      /* 4qtis */
+ 589   4                                      // if (qtis == 0)
+ 590   4                                      //      ii++;
+ 591   4                                      // if (ii > 2 && qtis == 0)
+ 592   4                                      // {
+ 593   4                                      //      back(30);
+ 594   4                                      //      turn_back();
+ 595   4                                      //      obj_count++;
+ 596   4                                      //      step = 0;
+ 597   4                                      //      flag_obj = 0;
+ 598   4                                      //      flag_back = 1;
+ 599   4                                      //      ii = 0;
+ 600   4                                      // }
+ 601   4                              }
+ 602   3                              
+ 603   3                              if(flag_interval_step == 0)
+ 604   3                              {
+ 605   4                                      if (qtis == 15 && flag_back == 1)
+ 606   4                                      {
+ 607   5                                              flag_dis = 1;
+ 608   5                                              flag_color = 1;
+ 609   5                                              step = 0;
+ 610   5                                              switch (color)
+ 611   5                                              {
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 11  
 
- 612   2                      {
- 613   3                              flag_left = 1;
- 614   3                              flag_right = 0;
- 615   3                      }
- 616   2                      else
- 617   2                      {
- 618   3                              flag_right = 1;
- 619   3                              flag_left = 0;
- 620   3                      }
- 621   2      
- 622   2                      if(qtis == 15 && flag_bw_back == 1)
- 623   2                      {
- 624   3                              step = 0;
- 625   3                              flag_bw_color = 1;
- 626   3                              if (flag_right == 1)
- 627   3                              {
- 628   4                                      Fast_forward(12);
- 629   4                                      turn_right_90();
- 630   4                              }
- 631   3                              else if (flag_left == 1)
- 632   3                              {
- 633   4                                      Fast_forward(12);
- 634   4                                      turn_left_90();
- 635   4                              }
- 636   3                              flag_bw_back = 0;
- 637   3                      }
- 638   2      
- 639   2                      if (qtis == 15 && flag_bw_color == 1 && step > 10)
- 640   2                      {
- 641   3                              step = 0;
- 642   3                              if (flag_right == 1)
- 643   3                              {
- 644   4                                      Fast_forward(20);
- 645   4                                      turn_right_120();
- 646   4                                      Fast_forward(40);
- 647   4                                      stop();
- 648   4                                      back(30);
- 649   4                                      flag_con = 1;
- 650   4                                      flag_dis = 1;
- 651   4                                      flag_color = 1;
- 652   4                              }
- 653   3                              else if (flag_left == 1)
- 654   3                              {
- 655   4                                      Fast_forward(20);
- 656   4                                      turn_left_120();
- 657   4                                      Fast_forward(40);
- 658   4                                      stop();
- 659   4                                      back(30);
- 660   4                                      flag_con = 1;
- 661   4                                      flag_dis = 1;
- 662   4                                      flag_color = 1;
- 663   4                              }
- 664   3                              flag_bw_color = 0;
- 665   3                      }
- 666   2                      if (flag_dis == 1 && flag_bw_color == 0)
- 667   2                      {
- 668   3                              InitTimer(); // 给超声波计时
- 669   3                              dis = GetSonarDis();
- 670   3                              if (dis > 5 && dis < 20)
- 671   3                              {
- 672   4                                      flag_obj = 1;
- 673   4                              }
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 12  
+ 612   6                                                      case YELLOW:Fast_forward(12);turn_right_90();break;
+ 613   6                                                      case WHITE:Fast_forward(20);turn_right_45();break;
+ 614   6                                                      case RED:Fast_forward(15);break;
+ 615   6                                                      case BLACK:Fast_forward(18);turn_left_45();break;
+ 616   6                                                      case BLUE:Fast_forward(12);turn_left_90();break;
+ 617   6                                              }
+ 618   5      
+ 619   5                                              color = 0;
+ 620   5                                              if (obj_count == 3 && step > 10) // 搬完三个回来，准备搬运黑白
+ 621   5                                              {
+ 622   6                                                      step = 0;
+ 623   6                                                      break;
+ 624   6                                              }
+ 625   5                                      }
+ 626   4                              }
+ 627   3                      }
+ 628   2              }
+ 629   1              
+ 630   1      
+ 631   1              /*第三阶段 搬运黑白物块*/
+ 632   1              // flag_dis = 0;        // 测距离标志位
+ 633   1              // flag_black = 0; // 黑色物块标志位
+ 634   1              // flag_color = 0; // 颜色检查标志位
+ 635   1              // flag_obj = 0;        // 是否有物块
+ 636   1              // flag_black_white_take = 1;   //标志取到黑白物块
+ 637   1              // flag_back = 0;               //返回标志位
+ 638   1              // flag_track = 1;
+ 639   1              // obj_count = 0;
+ 640   1              // color = 0;
+ 641   1              // dis = 100;
+ 642   1              // ii = 0;
+ 643   1              // step = 0;
+ 644   1              // turn_back();
+ 645   1              // while(1)
+ 646   1              // {
+ 647   1              //      // 循迹
+ 648   1              //      if(flag_track == 1)
+ 649   1              //      {
+ 650   1              //              tracking();
+ 651   1              //      }
+ 652   1      
+ 653   1              //      if(qtis == 15 && flag_black_white_take == 1)
+ 654   1              //      {
+ 655   1              //              Fast_forward(12);
+ 656   1              //              turn_right_90();
+ 657   1              //              flag_turn_r = 1;
+ 658   1              //      }
+ 659   1                      
+ 660   1              //      if(flag_turn_r == 1)
+ 661   1              //      {
+ 662   1              //              turn_r_count = 0;
+ 663   1              //              for(i=0; i < 200; i++)               //利用超声波搜索第五个物块500
+ 664   1              //              {                       
+ 665   1              //                      InitTimer();  //定时器初始化
+ 666   1              //                      dis = GetSonarDis(); //启动超声波
+ 667   1              //                      //printf("m = : %d\n",m);
+ 668   1              //                      delay_nms(100);
+ 669   1              //                      turn_r(1540,1540); //微转动
+ 670   1                                      
+ 671   1              //                      if(dis >= 10 && dis < 20)
+ 672   1              //                      {
+ 673   1              //                              turn_r_count = i;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 12  
 
- 674   3      
- 675   3                              if (dis > 90 && flag_obj == 1)
- 676   3                              {
- 677   4                                      dis = 0;
- 678   4                              }
- 679   3                      }
- 680   2      
- 681   2                      //判断颜色，获取颜色
- 682   2                      if(dis <= 2 && flag_color == 1 && flag_dis == 1 && flag_con == 1)
- 683   2                      {
- 684   3                              stop();
- 685   3                              color = get_color();
- 686   3                              if(color == BLACK)
- 687   3                              {
- 688   4                                      flag_black = 1;
- 689   4                              }
- 690   3                              flag_con = 0;
- 691   3                              flag_obj = 1;
- 692   3                              flag_color = 0;
- 693   3                              flag_back = 0;
- 694   3                              flag_dis = 0;
- 695   3                      }
- 696   2      
- 697   2                      if (qtis == 15 && flag_back == 0 && flag_black_white_take == 0 && color != 0)
- 698   2                      {
- 699   3                              step = 0;
- 700   3                              ii = 0;
- 701   3                              switch (color)
- 702   3                              {
- 703   4                                      case YELLOW:Fast_forward(12);turn_left_90();break;
- 704   4                                      case WHITE:Fast_forward(15);turn_left_45();break;
- 705   4                                      case RED:Fast_forward(15);break;
- 706   4                                      case BLACK:Fast_forward(15);turn_right_45();break;
- 707   4                                      case BLUE:Fast_forward(15);turn_right_90();break;
- 708   4                              }
- 709   3                              flag_put_color = 1;
- 710   3                      }
- 711   2      
- 712   2                      
- 713   2                      if (color == WHITE || color == RED || color == BLACK)
- 714   2                      {
- 715   3                              if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
- 716   3                              {
- 717   4                                      flag_track = 0;
- 718   4                                      stop();
- 719   4                                      back(30);
- 720   4                                      turn_back();
- 721   4                                      flag_track = 1;
- 722   4                                      obj_count++;
- 723   4                                      step = 0;
- 724   4                                      flag_put_color = 0;
- 725   4                                      flag_obj = 0;
- 726   4                                      flag_back = 1;
- 727   4                                      ii = 0;
- 728   4                              }
- 729   3                      }
- 730   2                      if (color == YELLOW)
- 731   2                      {
- 732   3                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
- 733   3                              {
- 734   4                                      flag_track = 0;
- 735   4                                      Fast_forward(18);
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 13  
+ 674   1              //                              if(black_white_count > 5)  //有几次次检测到物块，则前进80步，取下物块。
+ 675   1              //                              {
+ 676   1              //                                      stop();
+ 677   1              //                                      Fast_forward(98);
+ 678   1              //                                      flag_black_white_take = 0;
+ 679   1              //                                      flag_bw_back = 1;
+ 680   1              //                                      break;
+ 681   1              //                              }
+ 682   1              //                              black_white_count++;
+ 683   1              //                      }
+ 684   1              //              }
+ 685   1              //              flag_turn_r = 0;
+ 686   1              //      }
+ 687   1              //      if (turn_r_count > 30)
+ 688   1              //      {
+ 689   1              //              flag_left = 1;
+ 690   1              //              flag_right = 0;
+ 691   1              //      }
+ 692   1              //      else
+ 693   1              //      {
+ 694   1              //              flag_right = 1;
+ 695   1              //              flag_left = 0;
+ 696   1              //      }
+ 697   1      
+ 698   1              //      if(qtis == 15 && flag_bw_back == 1)
+ 699   1              //      {
+ 700   1              //              step = 0;
+ 701   1              //              flag_bw_color = 1;
+ 702   1              //              if (flag_right == 1)
+ 703   1              //              {
+ 704   1              //                      Fast_forward(12);
+ 705   1              //                      turn_right_90();
+ 706   1              //              }
+ 707   1              //              else if (flag_left == 1)
+ 708   1              //              {
+ 709   1              //                      Fast_forward(12);
+ 710   1              //                      turn_left_90();
+ 711   1              //              }
+ 712   1              //              flag_bw_back = 0;
+ 713   1              //      }
+ 714   1      
+ 715   1              //      if (qtis == 15 && flag_bw_color == 1 && step > 10)
+ 716   1              //      {
+ 717   1              //              step = 0;
+ 718   1              //              if (flag_right == 1)
+ 719   1              //              {
+ 720   1              //                      Fast_forward(20);
+ 721   1              //                      turn_right_120();
+ 722   1              //                      Fast_forward(40);
+ 723   1              //                      stop();
+ 724   1              //                      back(30);
+ 725   1              //                      flag_con = 1;
+ 726   1              //                      flag_dis = 1;
+ 727   1              //                      flag_color = 1;
+ 728   1              //              }
+ 729   1              //              else if (flag_left == 1)
+ 730   1              //              {
+ 731   1              //                      Fast_forward(20);
+ 732   1              //                      turn_left_120();
+ 733   1              //                      Fast_forward(40);
+ 734   1              //                      stop();
+ 735   1              //                      back(30);
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 13  
 
- 736   4                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 737   4                                      {
- 738   5                                              turn_r(1510, 1510);
- 739   5                                      }
- 740   4                                      stop();
- 741   4                                      back(30);
- 742   4                                      turn_back();
- 743   4                                      flag_track = 1;
- 744   4                                      obj_count++;
- 745   4                                      step = 0;
- 746   4                                      flag_put_color = 0;
- 747   4                                      flag_obj = 0;
- 748   4                                      flag_back = 1;
- 749   4                                      ii = 0;
- 750   4                              }
- 751   3      
- 752   3                              /*防止冲出地图*/
- 753   3                              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
- 754   3                              {
- 755   4                                      flag_track = 0;
- 756   4                                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
- 757   4                                      {
- 758   5                                              turn_r(1510, 1510);
- 759   5                                      }
- 760   4                                      stop();
- 761   4                                      back(30);
- 762   4                                      turn_back();
- 763   4                                      flag_track = 1;
- 764   4                                      obj_count++;
- 765   4                                      step = 0;
- 766   4                                      flag_put_color = 0;
- 767   4                                      flag_obj = 0;
- 768   4                                      flag_back = 1;
- 769   4                                      ii = 0;
- 770   4                              }
- 771   3                      }
- 772   2      
- 773   2                      if (color == BLUE)
- 774   2                      {
- 775   3                              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
- 776   3                              {
- 777   4      
- 778   4                                      flag_track = 0;
- 779   4                                      Fast_forward(18);
- 780   4                                      stop();
- 781   4                                      back(30);
- 782   4                                      turn_back();
- 783   4                                      flag_track = 1;
- 784   4                                      obj_count++;
- 785   4                                      step = 0;
- 786   4                                      flag_put_color = 0;
- 787   4                                      flag_obj = 0;
- 788   4                                      flag_back = 1;
- 789   4                                      ii = 0;
- 790   4                              }
- 791   3                              /*防止冲出地图*/
- 792   3                              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
- 793   3                              {
- 794   4      
- 795   4                                      flag_track = 0;
- 796   4                                      stop();
- 797   4                                      back(30);
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 14  
+ 736   1              //                      flag_con = 1;
+ 737   1              //                      flag_dis = 1;
+ 738   1              //                      flag_color = 1;
+ 739   1              //              }
+ 740   1              //              flag_bw_color = 0;
+ 741   1              //      }
+ 742   1              //      if (flag_dis == 1 && flag_bw_color == 0)
+ 743   1              //      {
+ 744   1              //              InitTimer(); // 给超声波计时
+ 745   1              //              dis = GetSonarDis();
+ 746   1              //              if (dis > 5 && dis < 20)
+ 747   1              //              {
+ 748   1              //                      flag_obj = 1;
+ 749   1              //              }
+ 750   1      
+ 751   1              //              if (dis > 90 && flag_obj == 1)
+ 752   1              //              {
+ 753   1              //                      dis = 0;
+ 754   1              //              }
+ 755   1              //      }
+ 756   1      
+ 757   1              //      //判断颜色，获取颜色
+ 758   1              //      if(dis <= 2 && flag_color == 1 && flag_dis == 1 && flag_con == 1)
+ 759   1              //      {
+ 760   1              //              stop();
+ 761   1              //              color = get_color();
+ 762   1              //              if(color == BLACK)
+ 763   1              //              {
+ 764   1              //                      flag_black = 1;
+ 765   1              //              }
+ 766   1              //              flag_con = 0;
+ 767   1              //              flag_obj = 1;
+ 768   1              //              flag_color = 0;
+ 769   1              //              flag_back = 0;
+ 770   1              //              flag_dis = 0;
+ 771   1              //      }
+ 772   1      
+ 773   1              //      if (qtis == 15 && flag_back == 0 && flag_black_white_take == 0 && color != 0)
+ 774   1              //      {
+ 775   1              //              step = 0;
+ 776   1              //              ii = 0;
+ 777   1              //              switch (color)
+ 778   1              //              {
+ 779   1              //                      case YELLOW:Fast_forward(12);turn_left_90();break;
+ 780   1              //                      case WHITE:Fast_forward(15);turn_left_45();break;
+ 781   1              //                      case RED:Fast_forward(15);break;
+ 782   1              //                      case BLACK:Fast_forward(15);turn_right_45();break;
+ 783   1              //                      case BLUE:Fast_forward(15);turn_right_90();break;
+ 784   1              //              }
+ 785   1              //              flag_put_color = 1;
+ 786   1              //      }
+ 787   1      
+ 788   1                      
+ 789   1              //      if (color == WHITE || color == RED || color == BLACK)
+ 790   1              //      {
+ 791   1              //              if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
+ 792   1              //              {
+ 793   1              //                      flag_track = 0;
+ 794   1              //                      stop();
+ 795   1              //                      back(30);
+ 796   1              //                      turn_back();
+ 797   1              //                      flag_track = 1;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 14  
 
- 798   4                                      turn_back();
- 799   4                                      flag_track = 1;
- 800   4                                      obj_count++;
- 801   4                                      step = 0;
- 802   4                                      flag_put_color = 0;
- 803   4                                      flag_obj = 0;
- 804   4                                      flag_back = 1;
- 805   4                                      ii = 0;
- 806   4                              }
- 807   3                      }
- 808   2      
- 809   2                      /* 4qits */
- 810   2      
- 811   2                      // 黑色物块放到对应位置，flag_back置1
- 812   2                      //  if(flag_black == 1)
- 813   2                      //  {
- 814   2                      //      if (step >= 45)
- 815   2                      //      {
- 816   2                      //              stop();
- 817   2                      //              back(30);
- 818   2                      //              turn_back();
- 819   2                      //              flag_black = 0;
- 820   2                      //              obj_count++;
- 821   2                      //              step = 0;
- 822   2                      //              flag_put_color = 0;
- 823   2                      //              flag_obj = 0;
- 824   2                      //              flag_back = 1;
- 825   2                      //              ii = 0;
- 826   2                      //      }
- 827   2                      //  }
- 828   2      
- 829   2                      // if(step >= 30)
- 830   2                      // {
- 831   2                      //      if (qtis == 0)
- 832   2                      //              ii++;
- 833   2                      //      if (ii > 2 && qtis == 0 && flag_black == 0)
- 834   2                      //      {
- 835   2                      //              stop();
- 836   2                      //              back(30);
- 837   2                      //              turn_back();
- 838   2                      //              obj_count++;
- 839   2                      //              step = 0;
- 840   2                      //              flag_obj = 0;
- 841   2                      //              flag_back = 1;
- 842   2                      //              ii = 0;
- 843   2                      //      }
- 844   2                      // }
- 845   2      
- 846   2                      //  if ((qtis_color == 16 || qtis_color == 32 || qtis_color == 48) && flag_put_color == 1)
- 847   2                      //  {
- 848   2                      //      stop();
- 849   2                      //      Fast_forward(15);
- 850   2                      //      back(30);
- 851   2                      //      turn_back();
- 852   2                      //      obj_count++;
- 853   2                      //      step = 0;
- 854   2                      //      flag_put_color = 0;
- 855   2                      //      flag_obj = 0;
- 856   2                      //      flag_back = 1;
- 857   2                      //      ii = 0;
- 858   2                      //  }
- 859   2      
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 15  
+ 798   1              //                      obj_count++;
+ 799   1              //                      step = 0;
+ 800   1              //                      flag_put_color = 0;
+ 801   1              //                      flag_obj = 0;
+ 802   1              //                      flag_back = 1;
+ 803   1              //                      ii = 0;
+ 804   1              //              }
+ 805   1              //      }
+ 806   1              //      if (color == YELLOW)
+ 807   1              //      {
+ 808   1              //              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
+ 809   1              //              {
+ 810   1              //                      flag_track = 0;
+ 811   1              //                      Fast_forward(18);
+ 812   1              //                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 813   1              //                      {
+ 814   1              //                              turn_r(1510, 1510);
+ 815   1              //                      }
+ 816   1              //                      stop();
+ 817   1              //                      back(30);
+ 818   1              //                      turn_back();
+ 819   1              //                      flag_track = 1;
+ 820   1              //                      obj_count++;
+ 821   1              //                      step = 0;
+ 822   1              //                      flag_put_color = 0;
+ 823   1              //                      flag_obj = 0;
+ 824   1              //                      flag_back = 1;
+ 825   1              //                      ii = 0;
+ 826   1              //              }
+ 827   1      
+ 828   1              //              /*防止冲出地图*/
+ 829   1              //              if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 830   1              //              {
+ 831   1              //                      flag_track = 0;
+ 832   1              //                      for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+ 833   1              //                      {
+ 834   1              //                              turn_r(1510, 1510);
+ 835   1              //                      }
+ 836   1              //                      stop();
+ 837   1              //                      back(30);
+ 838   1              //                      turn_back();
+ 839   1              //                      flag_track = 1;
+ 840   1              //                      obj_count++;
+ 841   1              //                      step = 0;
+ 842   1              //                      flag_put_color = 0;
+ 843   1              //                      flag_obj = 0;
+ 844   1              //                      flag_back = 1;
+ 845   1              //                      ii = 0;
+ 846   1              //              }
+ 847   1              //      }
+ 848   1      
+ 849   1              //      if (color == BLUE)
+ 850   1              //      {
+ 851   1              //              if (qtis_color == 16 && color != 0 && flag_put_color == 1)
+ 852   1              //              {
+ 853   1      
+ 854   1              //                      flag_track = 0;
+ 855   1              //                      Fast_forward(18);
+ 856   1              //                      stop();
+ 857   1              //                      back(30);
+ 858   1              //                      turn_back();
+ 859   1              //                      flag_track = 1;
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 15  
 
- 860   2                      
- 861   2                      
- 862   2                      if (qtis == 15 && flag_back == 1 && color != 0)
- 863   2                      {
- 864   3                              flag_color = 1;
- 865   3                              flag_back = 0;
- 866   3                              step = 0;
- 867   3                              switch (color)
- 868   3                              {
- 869   4                                      case YELLOW:Fast_forward(12);turn_right_90();break;
- 870   4                                      case WHITE:Fast_forward(20);turn_right_45();break;
- 871   4                                      case RED:Fast_forward(15);break;
- 872   4                                      case BLACK:Fast_forward(18);turn_left_45();break;
- 873   4                                      case BLUE:Fast_forward(12);turn_left_90();break;
- 874   4                                      default:break;
- 875   4                              }
- 876   3                              color = 0;
- 877   3                              Fast_forward(40);
- 878   3                              turn_back();
- 879   3                              flag_black_white_take = 1;
- 880   3                      }
- 881   2      
- 882   2                      if(obj_count == 2 && step > 30)
- 883   2                      {
- 884   3                              step = 0;
- 885   3                              stop();
- 886   3                              break;
- 887   3                              
- 888   3                      }
- 889   2              }
- 890   1              while(1)
- 891   1              {
- 892   2                      stop();
- 893   2              }
- 894   1      }
- 895          
- 896          
- 897          void tracking(void)
- 898          {
- 899   1              P0 = 0xff;              //检测黑线                                                                                                                   
- 900   1              qtis = P0 & 0x0f;       //读取4个巡线传感器的值
- 901   1              qtis_color = P0 & 0x30;         //两个qti放物块
- 902   1              step++;
- 903   1              Fast_forward(1);//前进一小步
- 904   1              switch(qtis)    //按照4个巡线传感器的值执行移动指令，巡线
- 905   1              {
- 906   2                      case 1:turn(1550,1550);break;     //大幅向右转
- 907   2                      case 2:          
- 908   2                      case 3:turn(1550,1500);break;     //小幅向右转
- 909   2                      case 8:turn(1450,1450);break;     //大幅向左转
- 910   2                      case 4:
- 911   2                      case 12:turn(1500,1450);break;    //小幅向左转
- 912   2                      case 5:
- 913   2                      case 6:
- 914   2                      case 7:
- 915   2                      case 10:
- 916   2                      case 13:
- 917   2                      case 14:
- 918   2                      case 15:Fast_forward(6);break;    //向前2小步                       
- 919   2              }
- 920   1      }
-*** WARNING C294 IN LINE 317 OF src\main.c: unreachable code
-C51 COMPILER V9.54   MAIN                                                                  10/20/2025 17:25:19 PAGE 16  
+ 860   1              //                      obj_count++;
+ 861   1              //                      step = 0;
+ 862   1              //                      flag_put_color = 0;
+ 863   1              //                      flag_obj = 0;
+ 864   1              //                      flag_back = 1;
+ 865   1              //                      ii = 0;
+ 866   1              //              }
+ 867   1              //              /*防止冲出地图*/
+ 868   1              //              if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
+ 869   1              //              {
+ 870   1      
+ 871   1              //                      flag_track = 0;
+ 872   1              //                      stop();
+ 873   1              //                      back(30);
+ 874   1              //                      turn_back();
+ 875   1              //                      flag_track = 1;
+ 876   1              //                      obj_count++;
+ 877   1              //                      step = 0;
+ 878   1              //                      flag_put_color = 0;
+ 879   1              //                      flag_obj = 0;
+ 880   1              //                      flag_back = 1;
+ 881   1              //                      ii = 0;
+ 882   1              //              }
+ 883   1              //      }
+ 884   1      
+ 885   1              //      /* 4qits */
+ 886   1      
+ 887   1              //      // 黑色物块放到对应位置，flag_back置1
+ 888   1              //      //  if(flag_black == 1)
+ 889   1              //      //  {
+ 890   1              //      //      if (step >= 45)
+ 891   1              //      //      {
+ 892   1              //      //              stop();
+ 893   1              //      //              back(30);
+ 894   1              //      //              turn_back();
+ 895   1              //      //              flag_black = 0;
+ 896   1              //      //              obj_count++;
+ 897   1              //      //              step = 0;
+ 898   1              //      //              flag_put_color = 0;
+ 899   1              //      //              flag_obj = 0;
+ 900   1              //      //              flag_back = 1;
+ 901   1              //      //              ii = 0;
+ 902   1              //      //      }
+ 903   1              //      //  }
+ 904   1      
+ 905   1              //      // if(step >= 30)
+ 906   1              //      // {
+ 907   1              //      //      if (qtis == 0)
+ 908   1              //      //              ii++;
+ 909   1              //      //      if (ii > 2 && qtis == 0 && flag_black == 0)
+ 910   1              //      //      {
+ 911   1              //      //              stop();
+ 912   1              //      //              back(30);
+ 913   1              //      //              turn_back();
+ 914   1              //      //              obj_count++;
+ 915   1              //      //              step = 0;
+ 916   1              //      //              flag_obj = 0;
+ 917   1              //      //              flag_back = 1;
+ 918   1              //      //              ii = 0;
+ 919   1              //      //      }
+ 920   1              //      // }
+ 921   1      
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 16  
 
+ 922   1              //      //  if ((qtis_color == 16 || qtis_color == 32 || qtis_color == 48) && flag_put_color == 1)
+ 923   1              //      //  {
+ 924   1              //      //      stop();
+ 925   1              //      //      Fast_forward(15);
+ 926   1              //      //      back(30);
+ 927   1              //      //      turn_back();
+ 928   1              //      //      obj_count++;
+ 929   1              //      //      step = 0;
+ 930   1              //      //      flag_put_color = 0;
+ 931   1              //      //      flag_obj = 0;
+ 932   1              //      //      flag_back = 1;
+ 933   1              //      //      ii = 0;
+ 934   1              //      //  }
+ 935   1      
+ 936   1                      
+ 937   1                      
+ 938   1              //      if (qtis == 15 && flag_back == 1 && color != 0)
+ 939   1              //      {
+ 940   1              //              flag_color = 1;
+ 941   1              //              flag_back = 0;
+ 942   1              //              step = 0;
+ 943   1              //              switch (color)
+ 944   1              //              {
+ 945   1              //                      case YELLOW:Fast_forward(12);turn_right_90();break;
+ 946   1              //                      case WHITE:Fast_forward(20);turn_right_45();break;
+ 947   1              //                      case RED:Fast_forward(15);break;
+ 948   1              //                      case BLACK:Fast_forward(18);turn_left_45();break;
+ 949   1              //                      case BLUE:Fast_forward(12);turn_left_90();break;
+ 950   1              //                      default:break;
+ 951   1              //              }
+ 952   1              //              color = 0;
+ 953   1              //              Fast_forward(40);
+ 954   1              //              if(obj_count != 2)
+ 955   1              //              {
+ 956   1              //                      turn_back();
+ 957   1              //              }
+ 958   1              //              flag_black_white_take = 1;
+ 959   1              //      }
+ 960   1      
+ 961   1              //      if(obj_count == 2 && step > 30)
+ 962   1              //      {
+ 963   1              //              step = 0;
+ 964   1              //              stop();
+ 965   1              //              break;
+ 966   1                              
+ 967   1              //      }
+ 968   1              // }
+ 969   1              // while(1)
+ 970   1              // {
+ 971   1              //      stop();
+ 972   1              // }
+ 973   1      }
+*** WARNING C280 IN LINE 296 OF src\main.c: 'interval_step': unreferenced local variable
+*** WARNING C280 IN LINE 25 OF src\main.c: 'i': unreferenced local variable
+ 974          
+ 975          
+ 976          void tracking(void)
+ 977          {
+ 978   1              P0 = 0xff;              //检测黑线                                                                                                                   
+ 979   1              qtis = P0 & 0x0f;       //读取4个巡线传感器的值
+ 980   1              qtis_color = P0 & 0x30;         //两个qti放物块
+ 981   1              Fast_forward(1);//前进一小步
+C51 COMPILER V9.54   MAIN                                                                  10/21/2025 19:36:06 PAGE 17  
+
+ 982   1              switch(qtis)    //按照4个巡线传感器的值执行移动指令，巡线
+ 983   1              {
+ 984   2                      case 1:step++;turn(1550,1550);break;      //大幅向右转
+ 985   2                      case 2:step++;break;     
+ 986   2                      case 3:step++;turn(1550,1500);break;      //小幅向右转
+ 987   2                      case 8:step++;turn(1450,1450);break;      //大幅向左转
+ 988   2                      case 4:step++;break;
+ 989   2                      case 12:step++;turn(1500,1450);break;     //小幅向左转
+ 990   2                      case 5:step++;break;
+ 991   2                      case 6:step++;break;
+ 992   2                      case 7:step++;break;
+ 993   2                      case 10:step++;break;
+ 994   2                      case 13:step++;break;
+ 995   2                      case 14:step++;break;
+ 996   2                      case 15:Fast_forward(6);break;    //向前2小步                       
+ 997   2              }
+ 998   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1224    ----
+   CODE SIZE        =   2478    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     29      15
+   DATA SIZE        =     33      14
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
