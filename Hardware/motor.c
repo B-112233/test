@@ -140,14 +140,14 @@ void turn_left_45(void)		   //��ת45��
 void turn_left_120(void)		   //��ת120�� 
 {
 	unsigned char i;
-	for(i=0;i<180;i++)		   
+	for(i=0;i<70;i++)		   
 	{
 		right_moter=1;
-		delay_nus(1480);
+		delay_nus(1460);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1480);
+		delay_nus(1460);
 		left_moter=0;
 
 		delay_nms(20);
@@ -208,14 +208,14 @@ void turn_right_45(void)
 void turn_right_120(void)
 {
 	unsigned char i;
-	for(i=0;i<180;i++)		   //��ת120��
+	for(i=0;i<70;i++)		   //��ת120��
 	{
 		right_moter=1;
-		delay_nus(1520);
+		delay_nus(1540);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1520);
+		delay_nus(1540);
 		left_moter=0;
 
 		delay_nms(20);

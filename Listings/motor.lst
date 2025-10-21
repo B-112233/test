@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 15:22:00 PAGE 1   
+C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 21:16:00 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MOTOR
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53                  
   54          void back(unsigned char a)//����
-C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 15:22:00 PAGE 2   
+C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 21:16:00 PAGE 2   
 
   55          {       
   56   1              unsigned char i;
@@ -126,7 +126,7 @@ line level    source
  114   2      
  115   2                      left_moter=1;
  116   2                      delay_nus(1400);
-C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 15:22:00 PAGE 3   
+C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 21:16:00 PAGE 3   
 
  117   2                      left_moter=0;
  118   2      
@@ -154,14 +154,14 @@ line level    source
  140          void turn_left_120(void)                   //��ת120�� 
  141          {
  142   1              unsigned char i;
- 143   1              for(i=0;i<180;i++)                 
+ 143   1              for(i=0;i<70;i++)                  
  144   1              {
  145   2                      right_moter=1;
- 146   2                      delay_nus(1480);
+ 146   2                      delay_nus(1460);
  147   2                      right_moter=0;
  148   2      
  149   2                      left_moter=1;
- 150   2                      delay_nus(1480);
+ 150   2                      delay_nus(1460);
  151   2                      left_moter=0;
  152   2      
  153   2                      delay_nms(20);
@@ -190,7 +190,7 @@ line level    source
  176   1              unsigned char i;
  177   1              for(i=0;i<26;i++)                  //��ת90��
  178   1              {
-C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 15:22:00 PAGE 4   
+C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 21:16:00 PAGE 4   
 
  179   2                      right_moter=1;
  180   2                      delay_nus(1600);
@@ -224,14 +224,14 @@ line level    source
  208          void turn_right_120(void)
  209          {
  210   1              unsigned char i;
- 211   1              for(i=0;i<180;i++)                 //��ת120��
+ 211   1              for(i=0;i<70;i++)                  //��ת120��
  212   1              {
  213   2                      right_moter=1;
- 214   2                      delay_nus(1520);
+ 214   2                      delay_nus(1540);
  215   2                      right_moter=0;
  216   2      
  217   2                      left_moter=1;
- 218   2                      delay_nus(1520);
+ 218   2                      delay_nus(1540);
  219   2                      left_moter=0;
  220   2      
  221   2                      delay_nms(20);
@@ -254,7 +254,7 @@ line level    source
  238   2                      delay_nms(20);
  239   2              }
  240   1      }
-C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 15:22:00 PAGE 5   
+C51 COMPILER V9.54   MOTOR                                                                 10/21/2025 21:16:00 PAGE 5   
 
  241          
  242          /* ���������� �� ��*/
