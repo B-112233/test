@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52   5                                              case 1:Fast_forward(12);turn_left_90();Fast_forward(10);break;          //第一次到中心点左转90
   53   5                                              case 2:Fast_forward(12);turn_right_90();Fast_forward(10);break;
   54   5                                              case 3:Fast_forward(15);turn_left_45();Fast_forward(10);break;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 2   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 2   
 
   55   5                                              case 4:Fast_forward(15);turn_right_45();Fast_forward(10);break; 
   56   5                                              case 5:Fast_forward(15);break;
@@ -126,7 +126,7 @@ line level    source
  114   2                      if (flag_test_color)
  115   2                      {
  116   3                              if ((color == YELLOW && record == 1) ||
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 3   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 3   
 
  117   3                                      (color == WHITE && record == 3) ||
  118   3                                      (color == RED && record == 5) ||
@@ -141,7 +141,7 @@ line level    source
  127   5                                              if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
  128   5                                              {
  129   6                                                      flag_track = 0;
- 130   6                                                      Fast_forward(5);
+ 130   6                                                      Fast_forward(6);
  131   6                                                      stop();
  132   6                                                      back(30);
  133   6                                                      turn_back();
@@ -190,7 +190,7 @@ line level    source
  176   6                                                      turn_back();
  177   6                                                      flag_track = 1;
  178   6                                                      obj_count++;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 4   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 4   
 
  179   6                                                      flag_put_color = 0;
  180   6                                                      flag_test_color = 0;
@@ -254,7 +254,7 @@ line level    source
  238   4                                      Fast_forward(20);
  239   4                                      turn_back();
  240   4                                      flag_test_color = 0;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 5   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 5   
 
  241   4                              }
  242   3                      }
@@ -318,7 +318,7 @@ line level    source
  300   5                                              flag = 0;
  301   5                                              flag_dis = 0;
  302   5                                              flag_color = 0;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 6   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 6   
 
  303   5                                      }
  304   4                                      ii = 0;
@@ -382,7 +382,7 @@ line level    source
  362   5                                              case BLACK:turn_right_45();break;
  363   5                                              case BLUE:turn_right_90();break;
  364   5                                      }
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 7   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 7   
 
  365   4                              }
  366   3      
@@ -446,7 +446,7 @@ line level    source
  424   1              //                      flag_interval_step = 1;
  425   1              //              }
  426   1      
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 8   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 8   
 
  427   1              //              if (step > 10 && flag_interval_step == 1)
  428   1              //              {
@@ -510,7 +510,7 @@ line level    source
  485   1              //                      if (color == YELLOW)
  486   1              //                      {
  487   1              //                              if (qtis_color == 32 && color != 0 && flag_put_color == 1)
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 9   
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 9   
 
  488   1              //                              {
  489   1              //                                      flag_track = 0;
@@ -574,7 +574,7 @@ line level    source
  547   1              //                                      flag_track = 0;
  548   1              //                                      stop();
  549   1              //                                      back(30);
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 10  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 10  
 
  550   1              //                                      turn_back();
  551   1              //                                      flag_track = 1;
@@ -638,7 +638,7 @@ line level    source
  608   1              {
  609   2                      // 循迹
  610   2                      if(flag_track == 1)
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 11  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 11  
 
  611   2                      {
  612   3                              tracking();
@@ -702,7 +702,7 @@ line level    source
  670   3                              {
  671   4                                      Fast_forward(12);
  672   4                                      turn_left_90();
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 12  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 12  
 
  673   4                              }
  674   3                              flag_bw_back = 0;
@@ -766,7 +766,7 @@ line level    source
  732   2                      {
  733   3                              step = 0;
  734   3                              ii = 0;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 13  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 13  
 
  735   3                              switch (color)
  736   3                              {
@@ -830,7 +830,7 @@ line level    source
  794   5                                      }
  795   4                                      stop();
  796   4                                      back(30);
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 14  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 14  
 
  797   4                                      turn_back();
  798   4                                      flag_track = 1;
@@ -894,7 +894,7 @@ line level    source
  856   2                      //              flag_put_color = 0;
  857   2                      //              flag_obj = 0;
  858   2                      //              flag_back = 1;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 15  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 15  
 
  859   2                      //              ii = 0;
  860   2                      //      }
@@ -958,7 +958,7 @@ line level    source
  918   2                      {
  919   3                              step = 0;
  920   3                              stop();
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 16  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 16  
 
  921   3                              break;
  922   3                              
@@ -1022,7 +1022,7 @@ line level    source
  980   2                      {
  981   3                              flag_track = 0;
  982   3                              Fast_forward(15);
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 17  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 17  
 
  983   3                              for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
  984   3                              {
@@ -1086,7 +1086,7 @@ line level    source
 1042   3                              turn_back();
 1043   3                              flag_track = 1;
 1044   3                              obj_count++;
-C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:56:09 PAGE 18  
+C51 COMPILER V9.54   MAIN                                                                  10/23/2025 11:58:51 PAGE 18  
 
 1045   3                              step = 0;
 1046   3                              flag_obj = 0;
