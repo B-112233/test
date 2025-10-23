@@ -241,7 +241,7 @@ void main(void)
 		/*把物体间隔放到缓冲区*/
 		if(record % 2 == 0 && record > 0 && flag_obj == 1 && flag_interval == 1)
  		{
- 			if(step > (175 - j * 45)) 
+ 			if(step > (180 - j * 45)) 
  			{
  				back(30);
  				turn_back();
@@ -459,218 +459,193 @@ void main(void)
 	
 
 	/* 第二部分 判断颜色 搬到指定地点*/
-	// flag_dis = 1;	// 测距离标志位
-	// flag_black = 0; // 黑色物块标志位
-	// flag_color = 1; // 颜色检查标志位
-	// flag_obj = 0;	// 是否有物块
-	// flag_put_color = 0;		//放置物块标志位
-	// flag_track = 1;		//循迹标志位
-	// flag_interval_step = 1;
-	// ii = 0;
-	// if(obj_count != 3)
-	// {
-	// 	while(1)
-	// 	{
-	// 		// 循迹
-	// 		if(flag_track == 1)
-	// 		{
-	// 			tracking();
-	// 		}
+	flag_dis = 1;	// 测距离标志位
+	flag_black = 0; // 黑色物块标志位
+	flag_color = 1; // 颜色检查标志位
+	flag_put_color = 0;		//放置物块标志位
+	flag_track = 1;		//循迹标志位
+	flag_interval_step = 1;
+	ii = 0;
+	if(obj_count != 3)
+	{
+		while(1)
+		{
+			// 循迹
+			if(flag_track == 1)
+			{
+				tracking();
+			}
 
-	// 		if (flag_dis == 1)
-	// 		{
-	// 			InitTimer(); // 给超声波计时
-	// 			dis = GetSonarDis();
-	// 			if (dis > 6 && dis < 20)
-	// 			{
-	// 				flag_obj = 1;
-	// 			}
-	// 		}
+			if (flag_dis == 1)
+			{
+				InitTimer(); // 给超声波计时
+				dis = GetSonarDis();
+			}
 
-	// 		// if (dis > 95 && flag_obj == 1)
-	// 		// {
-	// 		// 	dis = 0;
-	// 		// }
+			// dis <= 5时判断颜色，获取颜色
+			if(dis < 5 && flag_dis == 1)
+			{
+				Fast_forward(12);
+				stop();
+				color = get_color();
+				turn_back();
+				Fast_forward(20);
+				flag_color = 0;
+				flag_back = 0;
+				flag_dis = 0;
+				flag_interval_step = 1;
+			}
 
-	// 		// dis <= 2时判断颜色，获取颜色
-	// 		if(dis < 4 && flag_color == 1 && flag_obj == 1)
-	// 		{
-	// 			Fast_forward(10);
-	// 			stop();
-	// 			color = get_color();
-	// 			if(take_obj_count != 3)
-	// 			{
-	// 				turn_back();
-	// 			}
-	// 			Fast_forward(20);
-	// 			flag_obj = 0;
-	// 			flag_color = 0;
-	// 			flag_back = 0;
-	// 			flag_dis = 0;
-	// 			flag_interval_step = 1;
-	// 		}
+			if (step > 80 && flag_interval_step == 1)
+			{
+				step = 0;
+				flag_interval_step = 0;
+			}
 
-	// 		if (step > 10 && flag_interval_step == 1)
-	// 		{
-	// 			step = 0;
-	// 			flag_interval_step = 0;
-	// 		}
-
-	// 		if(flag_interval_step == 0)
-	// 		{
-	// 			if (qtis == 15 && flag_back == 0)
-	// 			{
-	// 				step = 0;
-	// 				ii = 0;
-	// 				switch (color)
-	// 				{
-	// 					case YELLOW:Fast_forward(12);turn_left_90();break;
-	// 					case WHITE:Fast_forward(15);turn_left_45();break;
-	// 					case RED:Fast_forward(15);break;
-	// 					case BLACK:Fast_forward(15);turn_right_45();break;
-	// 					case BLUE:Fast_forward(15);turn_right_90();break;
-	// 				}
-	// 				flag_put_color = 1;
-	// 			}
-	// 		}
+			if(flag_interval_step == 0)
+			{
+				if (qtis == 15 && flag_back == 0)
+				{
+					step = 0;
+					ii = 0;
+					switch (color)
+					{
+						case YELLOW:Fast_forward(12);turn_left_90();break;
+						case WHITE:Fast_forward(15);turn_left_45();break;
+						case RED:Fast_forward(15);break;
+						case BLACK:Fast_forward(15);turn_right_45();break;
+						case BLUE:Fast_forward(15);turn_right_90();break;
+					}
+					flag_put_color = 1;
+				}
+			}
 			
-	// 		//放到对应位置，flag_back置1
-	// 		// if(flag_black == 1)
-	// 		// {
-	// 		// 	if (step >= 55)
-	// 		// 	{
-	// 		// 		back(30);
-	// 		// 		turn_back();
-	// 		// 		step = 0;
-	// 		// 		flag_back = 1;
-	// 		// 		flag_black = 0;
-	// 		// 	}
-	// 		// }
+			//放到对应位置，flag_back置1
+			// if(flag_black == 1)
+			// {
+			// 	if (step >= 55)
+			// 	{
+			// 		back(30);
+			// 		turn_back();
+			// 		step = 0;
+			// 		flag_back = 1;
+			// 		flag_black = 0;
+			// 	}
+			// }
 			
 
-	// 		if(step > 30)
-	// 		{
-	// 			if (color == WHITE || color == RED || color == BLACK)
-	// 			{
-	// 				if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
-	// 				{
-	// 					flag_track = 0;
-	// 					Fast_forward(5);
-	// 					stop();
-	// 					back(30);
-	// 					turn_back();
-	// 					flag_track = 1;
-	// 					obj_count++;
-	// 					step = 0;
-	// 					flag_obj = 0;
-	// 					flag_back = 1;
-	// 					flag_put_color = 0;
-	// 				}
-	// 			}
+			if(step > 30)
+			{
+				if (color == WHITE || color == RED || color == BLACK)
+				{
+					if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
+					{
+						flag_track = 0;
+						Fast_forward(5);
+						stop();
+						back(30);
+						turn_back();
+						flag_track = 1;
+						obj_count++;
+						step = 0;
+						flag_back = 1;
+						flag_put_color = 0;
+					}
+				}
 
-	// 			if (color == YELLOW)
-	// 			{
-	// 				if (qtis_color == 32 && color != 0 && flag_put_color == 1)
-	// 				{
-	// 					flag_track = 0;
-	// 					Fast_forward(20);
-	// 					for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
-	// 					{
-	// 						turn_r(1510, 1510);
-	// 					}
-	// 					stop();
-	// 					back(30);
-	// 					turn_back();
-	// 					flag_track = 1;
-	// 					obj_count++;
-	// 					step = 0;
-	// 					flag_obj = 0;
-	// 					flag_back = 1;
-	// 					flag_put_color = 0;
-	// 				}
+				if (color == YELLOW)
+				{
+					if (qtis_color == 32 && color != 0 && flag_put_color == 1)
+					{
+						flag_track = 0;
+						Fast_forward(20);
+						for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+						{
+							turn_r(1510, 1510);
+						}
+						stop();
+						back(30);
+						turn_back();
+						flag_track = 1;
+						obj_count++;
+						step = 0;
+						flag_back = 1;
+						flag_put_color = 0;
+					}
 
-	// 				/*防止冲出地图*/
-	// 				if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
-	// 				{
-	// 					flag_track = 0;
-	// 					for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
-	// 					{
-	// 						turn_r(1510, 1510);
-	// 					}
-	// 					stop();
-	// 					back(30);
-	// 					turn_back();
-	// 					flag_track = 1;
-	// 					obj_count++;
-	// 					step = 0;
-	// 					flag_obj = 0;
-	// 					flag_back = 1;
-	// 					flag_put_color = 0;
-	// 				}
-	// 			}
+					/*防止冲出地图*/
+					if (qtis_color == 16 && qtis == 0 && color != 0 && flag_put_color == 1)
+					{
+						flag_track = 0;
+						for (turn_r_i = 0; turn_r_i < 3; turn_r_i++)
+						{
+							turn_r(1510, 1510);
+						}
+						stop();
+						back(30);
+						turn_back();
+						flag_track = 1;
+						obj_count++;
+						step = 0;
+						flag_back = 1;
+						flag_put_color = 0;
+					}
+				}
 
-	// 			if (color == BLUE)
-	// 			{
-	// 				if (qtis_color == 16 && color != 0 && flag_put_color == 1)
-	// 				{
+				if (color == BLUE)
+				{
+					if (qtis_color == 16 && color != 0 && flag_put_color == 1)
+					{
 
-	// 					flag_track = 0;
-	// 					Fast_forward(18);
-	// 					stop();
-	// 					back(30);
-	// 					turn_back();
-	// 					flag_track = 1;
-	// 					obj_count++;
-	// 					step = 0;
-	// 					flag_obj = 0;
-	// 					flag_back = 1;
-	// 					flag_put_color = 0;
-	// 				}
-	// 				/*防止冲出地图*/
-	// 				if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
-	// 				{
+						flag_track = 0;
+						Fast_forward(18);
+						stop();
+						back(30);
+						turn_back();
+						flag_track = 1;
+						obj_count++;
+						step = 0;
+						flag_back = 1;
+						flag_put_color = 0;
+					}
+					/*防止冲出地图*/
+					if (qtis_color == 32 && qtis == 0 && color != 0 && flag_put_color == 1)
+					{
 
-	// 					flag_track = 0;
-	// 					stop();
-	// 					back(30);
-	// 					turn_back();
-	// 					flag_track = 1;
-	// 					obj_count++;
-	// 					step = 0;
-	// 					flag_obj = 0;
-	// 					flag_back = 1;
-	// 					flag_put_color = 0;
-	// 					flag_test_color = 0;
-	// 				}
-	// 			}
-	// 		}
+						flag_track = 0;
+						stop();
+						back(30);
+						turn_back();
+						flag_track = 1;
+						obj_count++;
+						step = 0;
+						flag_back = 1;
+						flag_put_color = 0;
+						flag_test_color = 0;
+					}
+				}
+			}
 			
-	// 		if(flag_interval_step == 0)
-	// 		{
-	// 			if (qtis == 15 && flag_back == 1)
-	// 			{
-	// 				flag_dis = 1;
-	// 				flag_color = 1;
-	// 				step = 0;
-	// 				switch (color)
-	// 				{
-	// 					case YELLOW:Fast_forward(12);turn_right_90();break;
-	// 					case WHITE:Fast_forward(20);turn_right_45();break;
-	// 					case RED:Fast_forward(15);break;
-	// 					case BLACK:Fast_forward(18);turn_left_45();break;
-	// 					case BLUE:Fast_forward(12);turn_left_90();break;
-	// 				}
-
-	// 				color = 0;
-	// 				if (obj_count == 3) // 搬完三个回来，准备搬运黑白
-	// 				{
-	// 					turn_back();
-	// 					break;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
+			if(flag_interval_step == 0)
+			{
+				if (qtis == 15 && flag_back == 1)
+				{
+					flag_dis = 1;
+					flag_color = 1;
+					step = 0;
+					switch (color)
+					{
+						case YELLOW:Fast_forward(12);turn_right_90();break;
+						case WHITE:Fast_forward(20);turn_right_45();break;
+						case RED:Fast_forward(15);break;
+						case BLACK:Fast_forward(18);turn_left_45();break;
+						case BLUE:Fast_forward(12);turn_left_90();break;
+					}
+					color = 0;
+				}
+			}
+		}
+	}
 	
 
 	/*第三阶段 搬运黑白物块*/
