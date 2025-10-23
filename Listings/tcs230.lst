@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   TCS230                                                                10/22/2025 20:45:26 PAGE 1   
+C51 COMPILER V9.54   TCS230                                                                10/23/2025 11:48:32 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE TCS230
@@ -62,7 +62,7 @@ line level    source
   52   1                      
   53   1              EA=1;
   54   1              ET0=1;
-C51 COMPILER V9.54   TCS230                                                                10/22/2025 20:45:26 PAGE 2   
+C51 COMPILER V9.54   TCS230                                                                10/23/2025 11:48:32 PAGE 2   
 
   55   1              TR0=1;
   56   1              TR1=1;
@@ -126,7 +126,7 @@ line level    source
  114   2      
  115   2                      //ѡ���ɫ�˹�
  116   2                      s2=0;
-C51 COMPILER V9.54   TCS230                                                                10/22/2025 20:45:26 PAGE 3   
+C51 COMPILER V9.54   TCS230                                                                10/23/2025 11:48:32 PAGE 3   
 
  117   2                      s3=0;
  118   2                      while(disp_tc!=pred); 
