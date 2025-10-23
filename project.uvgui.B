@@ -91,10 +91,10 @@
         <yPos>-1</yPos>
       </MaxPosition>
       <NormalPosition>
-        <Top>60</Top>
-        <Left>-61</Left>
-        <Right>1644</Right>
-        <Bottom>940</Bottom>
+        <Top>39</Top>
+        <Left>-7</Left>
+        <Right>1698</Right>
+        <Bottom>919</Bottom>
       </NormalPosition>
     </WindowPosition>
     <MDIClientArea>
@@ -3517,8 +3517,8 @@
       <Doc>
         <Name>.\src\main.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>1005</TopLine>
-        <CurrentLine>1017</CurrentLine>
+        <TopLine>1</TopLine>
+        <CurrentLine>10</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

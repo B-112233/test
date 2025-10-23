@@ -142,7 +142,7 @@ int get_color(void)
 	else if (red >= 200 && green >= 150 && blue <= 100){
 		color = YELLOW;
 	}
-	else if(blue > 40 && blue < 190)
+	else
 	{
 		color = BLUE;
 		printf("color = %d\n", color);
