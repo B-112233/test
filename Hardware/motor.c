@@ -140,7 +140,7 @@ void turn_left_45(void)		   //��ת45��
 void turn_left_120(void)		   //��ת120�� 
 {
 	unsigned char i;
-	for(i=0;i<70;i++)		   
+	for(i=0;i<75;i++)		   
 	{
 		right_moter=1;
 		delay_nus(1460);
