@@ -6,7 +6,6 @@ void Forward(unsigned int left,unsigned int right,unsigned char a);
 void turn(unsigned int left,unsigned int right);
 void stop(void);
 void back(unsigned char a);
-void turn(unsigned int left,unsigned int right);
 
 void turn_back();
 void turn_back_r();
@@ -23,5 +22,6 @@ void turn_right_120(void);
 void fast_turn_right_90(void);
 void turn_r(unsigned int left,unsigned int right);
 
+void turn_custom(unsigned int left, unsigned int right, unsigned char count);
 
 #endif
