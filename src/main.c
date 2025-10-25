@@ -13,7 +13,7 @@ void put_color(void);
 int qtis, qtis_color, step = 0, color, turn_r_i = 0;
 unsigned char flag = 0, flag_color = 1, flag_put_color = 0,
 			  flag_back = 1, flag_dis = 1, 
-			  flag_black = 0, flag_obj = 0, flag_obj_t = 0,
+			  flag_black = 0, flag_obj = 0, flag_obj_t = 0, flag_obj_back = 0,
 			  flag_test_color = 0, flag_turn_r = 0,
 			  flag_right = 0, flag_left = 0,
 			  flag_black_white_take = 1, flag_take_back = 0, flag_con = 0,
@@ -50,16 +50,16 @@ void main(void)
 				record++;
 				switch(record)				
 				{
-					case 1:Fast_forward(12);turn_left_90();break;
-					case 2:Fast_forward(12);turn_right_90();break;
-					case 3:Fast_forward(12);turn_left_45();break;
-					case 4:Fast_forward(15);turn_right_45();break;	
-					case 5:Fast_forward(15);break;
-					case 6:Fast_forward(15);break;
-					case 7:Fast_forward(15);turn_right_45();break;   	   
-					case 8:Fast_forward(15);turn_left_45();break;
-					case 9:Fast_forward(10);turn_right_90();break;		 
-					case 10:Fast_forward(12);turn_left_90();break;
+					case 1:Fast_forward(13);turn_left_90();break;
+					case 2:Fast_forward(13);turn_right_90();break;
+					case 3:Fast_forward(13);turn_left_45();break;
+					case 4:Fast_forward(13);turn_right_45();break;	
+					case 5:Fast_forward(13);break;
+					case 6:Fast_forward(13);break;
+					case 7:Fast_forward(13);turn_right_45();break;   	   
+					case 8:Fast_forward(13);turn_left_45();break;
+					case 9:Fast_forward(13);turn_right_90();break;		 
+					case 10:Fast_forward(13);turn_left_90();break;
 				}
 				
 				if (record % 2 == 1 && record > 0)
@@ -80,6 +80,15 @@ void main(void)
 		{
 			InitTimer(); // 给超声波计时
 			dis = GetSonarDis();
+			if(dis < 50)
+			{
+				flag_obj_back = 0;
+			}
+		}
+		
+		if(flag_obj_back == 0)
+		{
+
 		}
 
 		if (dis < 5 && flag_dis == 1)
@@ -100,7 +109,7 @@ void main(void)
 		}
 
 		/* 放黄、红、蓝物块 */
-		if (flag_test_color && step > 80)
+		if (flag_test_color)
 		{
 			if ((color == YELLOW && record == 1) ||
 				(color == WHITE && record == 3) ||
@@ -119,7 +128,7 @@ void main(void)
 						flag_track = 0;
 						Fast_forward(6);
 						stop();
-						back(30);
+						back(25);
 						turn_back();
 						flag_track = 1;
 						obj_count++;
@@ -142,7 +151,7 @@ void main(void)
 						turn_r(1510, 1510);
 						}
 						stop();
-						back(30);
+						back(25);
 						turn_back();
 						flag_track = 1;
 						obj_count++;
@@ -160,7 +169,7 @@ void main(void)
 							turn_r(1510, 1510);
 						}
 						stop();
-						back(30);
+						back(25);
 						turn_back();
 						flag_track = 1;
 						obj_count++;
@@ -180,7 +189,7 @@ void main(void)
 						flag_track = 0;
 						Fast_forward(18);
 						stop();
-						back(30);
+						back(25);
 						turn_back();
 						flag_track = 1;
 						obj_count++;
@@ -195,7 +204,7 @@ void main(void)
 
 						flag_track = 0;
 						stop();
-						back(30);
+						back(25);
 						turn_back();
 						flag_track = 1;
 						obj_count++;
@@ -299,11 +308,11 @@ void main(void)
 				step = 0;
 				switch(record)				
 				{
-					case 2:Fast_forward(12);turn_left_90();break;
-					case 4:Fast_forward(15);turn_left_90();turn_left_45();break;	
-					case 6:Fast_forward(15);turn_back();break;
-					case 8:Fast_forward(15);turn_right_45();turn_right_90();break;
-					case 10:Fast_forward(12);turn_right_90();break;
+					case 2:Fast_forward(18);turn_left_90();break;
+					case 4:Fast_forward(18);turn_left_90();turn_left_45();break;	
+					case 6:Fast_forward(18);turn_back();break;
+					case 8:Fast_forward(18);turn_right_45();turn_right_90();break;
+					case 10:Fast_forward(18);turn_right_90();break;
 				}
 				break;
 			}
@@ -641,7 +650,6 @@ void main(void)
 
 	/*第三阶段 搬运黑白物块*/
 	flag_black = 0; // 黑色物块标志位
-	flag_color = 0; // 颜色检查标志位
 	flag_back = 0;		//返回标志位
 	flag_track = 1;
 	obj_count = 0;
@@ -683,6 +691,7 @@ void main(void)
 			}
 			flag_turn_r = 0;
 		}
+
 		if (turn_r_count > 45)
 		{
 			flag_left = 1;
@@ -719,25 +728,20 @@ void main(void)
 				Fast_forward(15);
 				turn_right_120();
 				Fast_forward(20);
-				// stop();
-				// back(20);
 				flag_back = 0;
 				flag_con = 1;
-				flag_color = 1;
 			}
 			else if (flag_left == 1)
 			{
 				Fast_forward(15);
 				turn_left_120();
 				Fast_forward(20);
-				// stop();
-				// back(20);
 				flag_back = 0;
 				flag_con = 1;
 			}
 			flag_bw_color = 0;
 		}
-		
+
 		if (qtis == 15 && flag_con == 1 && step > 30)
 		{
 			stop();
@@ -924,12 +928,6 @@ void main(void)
 				}
 				flag_turn_r = 1;
 				color = 0;
-				// Fast_forward(10);
-				// if(obj_count != 2)
-				// {
-				// 	turn_back();
-				// }
-				//flag_black_white_take = 1;
 			}
 		}
 
