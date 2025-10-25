@@ -61,6 +61,7 @@ void main(void)
 				if (record % 2 == 1 && record > 0)
 				{
 					flag_dis = 1;
+					flag_turn_r = 1;
 				}
 				else
 				{
@@ -72,38 +73,42 @@ void main(void)
 			}
 		}
 
+		if (flag_turn_r == 1)
+		{
+			turn_r_count = 0;
+			for (i = 0; i < 5; i++) // 利用超声波搜索第五个物块500
+			{
+				InitTimer();		 // 定时器初始化
+				dis = GetSonarDis(); // 启动超声波
+				turn_right_45();
+				stop();
+				//turn_custom(1530, 1530, 30);	 // 微转动
+				// delay_nms(20);
+				// turn_r(1490, 1490);
+				if (dis >= 8 && dis < 25)
+				{
+					turn_r_count = i;
+					if (black_white_count > 6) // 有几次次检测到物块，则前进80步，取下物块。
+					{
+						turn_r(1540, 1540); // 微转动
+						stop();
+						Fast_forward(15);
+						flag_obj = 1;
+						flag_bw_back = 1;
+						black_white_count = 0;
+						break;
+					}
+					black_white_count++;
+				}
+			}
+			flag_turn_r = 0;
+		}
+
 		if (flag_dis == 1)
 		{
 			InitTimer(); // 给超声波计时
 			dis = GetSonarDis();
-			// if (dis > 50)
-			// {
-			// 	flag_dis = 0;
-			// 	flag_track = 0;
-			// 	flag_obj_turn = 0;
-			// }
-			// else
-			// {
-			// 	flag_track = 1;
-			// 	flag_obj_turn = 1;
-			// }
 		}
-
-		// if(flag_obj_turn == 0)
-		// {
-		// 	turn_custom(1530, 1530, 30);
-		// 	stop();
-		// 	flag_dis = 1;
-		// 	flag_obj_turn = 1;
-		// 	record_count++;
-		// 	switch(record_count)
-		// 	{
-		// 		case 1:record = 3;break;
-		// 		case 2:record = 5;break;
-		// 		case 3:record = 7;break;
-		// 		case 4:record = 9;break;	
-		// 	}
-		// }
 
 		if (dis < 5 && flag_dis == 1)
 		{
@@ -268,9 +273,9 @@ void main(void)
 		/*把物体间隔放到缓冲区*/
 		if(record % 2 == 0 && record > 0 && flag_obj == 1 && flag_interval == 1)
  		{
- 			if(step > (180 - j * 40)) 
+ 			if(step > (175 - j * 35)) 
  			{
- 				back(30);
+ 				back(28);
  				turn_back();
 				flag_obj = 0;
  				step = 0;
@@ -747,7 +752,7 @@ void main(void)
 			else if (flag_left == 1)
 			{
 				Fast_forward(23);
-				turn_custom(1430, 1430, 42);
+				turn_custom(1430, 1430, 45);
 			}
 			flag_bw_back = 0;
 		}
@@ -805,7 +810,7 @@ void main(void)
 				if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
 				{
 					flag_track = 0;
-					Fast_forward(11);
+					Fast_forward(12);
 					stop();
 					back(30);
 					turn_back();
@@ -983,7 +988,7 @@ void main(void)
 			}
 		}
 
-		if(obj_count == 2 && step > 190 && color == 0)
+		if(obj_count == 2 && step > 195 && color == 0)
 		{
 			step = 0;
 			stop();

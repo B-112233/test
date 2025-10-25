@@ -19,9 +19,9 @@ long int  green=0,red=0,blue=0;	//RGB��ɫ��ʼ��
 
 /**********************RGB����ϵ��***************************/
 /****************ͨ����ƽ��ó���ʱ�����ϵ��*************/
-#define pred   76
-#define pgreen 73
-#define pblue  72
+#define pred   95
+#define pgreen 95
+#define pblue  95
 
 int  disp_tc;  //������־
 
@@ -136,7 +136,7 @@ int get_color(void)
 	else if (red >= 200 && green >= 200 && blue >= 200){
 		color = WHITE;
 	}
-	else if (red >= 150 && green <= 50 && blue <= 50){
+	else if (red >= 150 && green <= 65 && blue <= 65){
 		color = RED;
 	}
 	else if (red >= 200 && green >= 150 && blue <= 100){
