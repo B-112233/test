@@ -9,8 +9,8 @@ void tracking(void);
 
 int qtis, qtis_color, step = 0, color, turn_r_i = 0;
 unsigned char flag = 0, flag_put_color = 0,
-			  flag_back = 1, flag_dis = 1, 
-			  flag_black = 0, flag_obj = 0,
+			  flag_back = 1, flag_dis = 0, 
+			  flag_black = 0, flag_obj = 0, flag_obj_turn = 1,
 			  flag_test_color = 0, flag_turn_r = 0,
 			  flag_right = 0, flag_left = 0, flag_con = 0,
 			  flag_bw_back = 0, flag_bw_color = 0, flag_track = 1, flag_interval = 0,
@@ -20,7 +20,7 @@ unsigned char obj_count = 0, put_obj_count = 0, take_obj_count = 0;
 
 void main(void)
 {
-	unsigned char record = 0, j = 0, black_white_count = 0;
+	unsigned char record = 0, j = 0, black_white_count = 0, record_count = 0;
 	int i, turn_r_count = 0;
 	char ii = 0;
 	unsigned int dis;
@@ -49,11 +49,11 @@ void main(void)
 					case 1:Fast_forward(13);turn_left_90();break;
 					case 2:Fast_forward(13);turn_right_90();break;
 					case 3:Fast_forward(13);turn_left_45();break;
-					case 4:Fast_forward(13);turn_right_45();break;	
+					case 4:Fast_forward(15);turn_right_45();break;	
 					case 5:Fast_forward(13);break;
 					case 6:Fast_forward(13);break;
 					case 7:Fast_forward(13);turn_right_45();break;   	   
-					case 8:Fast_forward(13);turn_left_45();break;
+					case 8:Fast_forward(15);turn_left_45();break;
 					case 9:Fast_forward(13);turn_right_90();break;		 
 					case 10:Fast_forward(13);turn_left_90();break;
 				}
@@ -76,7 +76,34 @@ void main(void)
 		{
 			InitTimer(); // 给超声波计时
 			dis = GetSonarDis();
+			// if (dis > 50)
+			// {
+			// 	flag_dis = 0;
+			// 	flag_track = 0;
+			// 	flag_obj_turn = 0;
+			// }
+			// else
+			// {
+			// 	flag_track = 1;
+			// 	flag_obj_turn = 1;
+			// }
 		}
+
+		// if(flag_obj_turn == 0)
+		// {
+		// 	turn_custom(1530, 1530, 30);
+		// 	stop();
+		// 	flag_dis = 1;
+		// 	flag_obj_turn = 1;
+		// 	record_count++;
+		// 	switch(record_count)
+		// 	{
+		// 		case 1:record = 3;break;
+		// 		case 2:record = 5;break;
+		// 		case 3:record = 7;break;
+		// 		case 4:record = 9;break;	
+		// 	}
+		// }
 
 		if (dis < 5 && flag_dis == 1)
 		{
