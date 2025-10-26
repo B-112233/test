@@ -21,7 +21,7 @@ unsigned char obj_count = 0, put_obj_count = 0, take_obj_count = 0;
 void main(void)
 {
 	unsigned char record = 0, j = 0, black_white_count = 0, record_count = 0;
-	int i, turn_r_count = 0;
+	int i, k, turn_r_count = 0;
 	char ii = 0;
 	unsigned int dis;
 	uart_Init();	//初始化超声波
@@ -42,20 +42,21 @@ void main(void)
 		{
 			if(qtis == 15 && flag_turn == 0)					  
 			{
+				Fast_forward(13);
 				step = 0;
 				record++;
 				switch(record)				
 				{
-					case 1:Fast_forward(13);turn_left_90();break;
-					case 2:Fast_forward(13);turn_right_90();break;
-					case 3:Fast_forward(13);turn_left_45();break;
-					case 4:Fast_forward(15);turn_right_45();break;	
-					case 5:Fast_forward(13);break;
-					case 6:Fast_forward(13);break;
-					case 7:Fast_forward(13);turn_right_45();break;   	   
-					case 8:Fast_forward(15);turn_left_45();break;
-					case 9:Fast_forward(13);turn_right_90();break;		 
-					case 10:Fast_forward(13);turn_left_90();break;
+					case 1:turn_left_90();break;
+					case 2:turn_right_90();break;
+					case 3:turn_left_45();break;
+					case 4:Fast_forward(2);turn_right_45();break;	
+					case 5:break;
+					case 6:break;
+					case 7:turn_right_45();break;   	   
+					case 8:Fast_forward(2);turn_left_45();break;
+					case 9:turn_right_90();break;		 
+					case 10:turn_left_90();break;
 				}
 				
 				if (record % 2 == 1 && record > 0)
@@ -79,8 +80,12 @@ void main(void)
 			for (i = 0; i < 4; i++)
 			{
 				stop();
-				InitTimer();		 // 定时器初始化
-				dis = GetSonarDis(); // 启动超声波
+				for(k = 0; k < 2; k++)
+				{
+					InitTimer();		 // 定时器初始化
+					dis = GetSonarDis(); // 启动超声波
+				}
+
 				if (dis >= 8 && dis < 30)
 				{
 					flag_dis = 1;
@@ -113,7 +118,6 @@ void main(void)
 				flag_turn = 2;
 			}
 			color = get_color();
-			Fast_forward(55);
 			flag_test_color = 1;
 			flag_dis = 0;
 			flag_obj = 1;
@@ -237,7 +241,7 @@ void main(void)
 			}
 			else
 			{
-				Fast_forward(20);
+				Fast_forward(75);
 				turn_back();
 				flag_test_color = 0;
 			}
@@ -314,13 +318,14 @@ void main(void)
 			if(qtis == 15 && flag_turn == 2)
 			{
 				step = 0;
+				Fast_forward(13);
 				switch(record)				
 				{
-					case 2:Fast_forward(18);turn_left_90();break;
-					case 4:Fast_forward(18);turn_left_90();turn_left_45();break;	
-					case 6:Fast_forward(18);turn_back();break;
-					case 8:Fast_forward(18);turn_right_45();turn_right_90();break;
-					case 10:Fast_forward(18);turn_right_90();break;
+					case 2:turn_left_90();break;
+					case 4:turn_left_90();turn_left_45();break;	
+					case 6:turn_back();break;
+					case 8:turn_right_45();turn_right_90();break;
+					case 10:turn_right_90();break;
 				}
 				break;
 			}
