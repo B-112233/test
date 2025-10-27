@@ -123,14 +123,14 @@ void turn_left_150(void)		   //��ת150��
 void turn_left_90(void)
 {
 	unsigned char i;
-	for(i=0;i<24;i++)		   //��ת90��
+	for(i=0;i<35;i++)		   //��ת90��
 	{
 		right_moter=1;
-		delay_nus(1400);
+		delay_nus(1440);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1400);
+		delay_nus(1440);
 		left_moter=0;
 
 		delay_nms(20);
@@ -140,14 +140,14 @@ void turn_left_90(void)
 void turn_left_45(void)		   //��ת45�� 
 {
 	unsigned char i;
-	for(i=0;i<15;i++)		   
+	for(i=0;i<17;i++)		   
 	{
 		right_moter=1;
-		delay_nus(1400);
+		delay_nus(1440);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1400);
+		delay_nus(1440);
 		left_moter=0;
 
 		delay_nms(20);
@@ -191,14 +191,14 @@ void turn_right_150(void)
 void turn_right_90(void) 
 {
 	unsigned char i;
-	for(i=0;i<26;i++)		   //��ת90��
+	for(i=0;i<35;i++)		   //��ת90��
 	{
 		right_moter=1;
-		delay_nus(1600);
+		delay_nus(1560);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1600);
+		delay_nus(1560);
 		left_moter=0;
 
 		delay_nms(20);
@@ -208,14 +208,14 @@ void turn_right_90(void)
 void turn_right_45(void)
 {
 	unsigned char i;
-	for(i=0;i<15;i++)		   //��ת45��
+	for(i=0;i<17;i++)		   //��ת45��
 	{
 		right_moter=1;
-		delay_nus(1600);
+		delay_nus(1560);
 		right_moter=0;
 
 		left_moter=1;
-		delay_nus(1600);
+		delay_nus(1560);
 		left_moter=0;
 
 		delay_nms(20);

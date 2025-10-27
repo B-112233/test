@@ -93,8 +93,8 @@ void main(void)
 					stop();
 					break;
 				}
-				delay_nms(200);
-				turn_custom(1550, 1550, 19);	 // 微转动
+				delay_nms(500);
+				turn_custom(1560, 1560, 17);	 // 微转动
 				//turn_right_45();
 				record += 2;
 			}
@@ -284,7 +284,7 @@ void main(void)
 				flag_obj = 0;
 				switch(record)				
 				{
-					case 2:Fast_forward(18);turn_custom(1400, 1400, 22);turn_left_45();break;
+					case 2:Fast_forward(18);turn_left_90();turn_left_45();break;
 					case 4:Fast_forward(18);turn_left_45();turn_left_90();break;	
 					case 6:Fast_forward(18);turn_back();turn_right_45();break;
 					case 8:Fast_forward(18);turn_left_45();turn_left_90();break;
@@ -321,9 +321,9 @@ void main(void)
 				switch(record)				
 				{
 					case 2:Fast_forward(15);turn_left_90();break;
-					case 4:Fast_forward(20);turn_left_90();turn_left_45();break;	
+					case 4:Fast_forward(15);turn_left_90();turn_left_45();break;	
 					case 6:Fast_forward(20);turn_back();break;
-					case 8:Fast_forward(18);turn_right_45();turn_right_90();break;
+					case 8:Fast_forward(15);turn_right_45();turn_right_90();break;
 					case 10:Fast_forward(15);turn_right_90();break;
 				}
 				stop();
@@ -695,7 +695,7 @@ void main(void)
 				InitTimer();  //定时器初始化
 				dis = GetSonarDis(); //启动超声波
 				turn_r(1530,1530); //微转动
-				if(dis < 30)
+				if(dis < 35)
 				{
 					turn_r_count = i;
 					if(black_white_count > 5)  //有几次次检测到物块，则前进80步，取下物块。
