@@ -10,25 +10,24 @@ void tracking(void);
 int qtis, qtis_color, step = 0, color, turn_r_i = 0;
 unsigned char flag = 0, flag_put_color = 0,
 			  flag_back = 1, flag_dis = 0, 
-			  flag_black = 0, flag_obj = 0, flag_obj_turn = 1,
+			  flag_black = 0, flag_obj = 0,
 			  flag_test_color = 0, flag_turn_r = 0,
 			  flag_right = 0, flag_left = 0, flag_con = 0,
 			  flag_bw_back = 0, flag_bw_color = 0, flag_track = 1, flag_interval = 0,
-			  flag_interval_step = 0, flag_put = 0, flag_turn = 0, flag_stage = 0;
+			  flag_interval_step = 0, flag_put = 0, flag_turn = 0;
 			  
-unsigned char obj_count = 0, put_obj_count = 0, take_obj_count = 0;
+unsigned char obj_count = 0, take_obj_count = 0;
 
 void main(void)
 {
-	unsigned char record = 0, j = 0, black_white_count = 0, record_count = 0;
-	int i, k, turn_r_count = 0;
-	char ii = 0;
-	unsigned int dis;
+	unsigned char record = 0, black_white_count = 0;
+	unsigned int i, j = 0, k, turn_r_count = 0, dis;
+	unsigned char ii;
 	uart_Init();	//初始化超声波
 
 	//开始时向前走一段
- 	delay_nms(2000);
- 	Fast_forward(40);
+ 	delay_nms(1500);
+ 	Fast_forward(60);
 
  	/*第一阶段 把物块搬回缓冲区或搬到指定位置*/
  	while(1)
@@ -88,6 +87,8 @@ void main(void)
 
 				if (dis > 5 && dis < 30)
 				{
+					flag_turn_r = 0;
+					flag_obj = 1;
 					flag_dis = 1;
 					turn_r_count = i;
 					stop();
@@ -98,7 +99,6 @@ void main(void)
 				//turn_right_45();
 				record += 2;
 			}
-			flag_turn_r = 0;
 		}
 
 		if (flag_dis == 1)
@@ -147,6 +147,7 @@ void main(void)
 						turn_back();
 						flag_track = 1;
 						obj_count++;
+						flag_obj = 0;
 						flag_put_color = 0;
 						flag_test_color = 0;
 						color = 0;
@@ -170,6 +171,7 @@ void main(void)
 						turn_back();
 						flag_track = 1;
 						obj_count++;
+						flag_obj = 0;
 						flag_put_color = 0;
 						flag_test_color = 0;
 						color = 0;
@@ -184,6 +186,7 @@ void main(void)
 						turn_back();
 						flag_track = 1;
 						obj_count++;
+						flag_obj = 0;
 						flag_put_color = 0;
 						flag_test_color = 0;
 						color = 0;
@@ -204,6 +207,7 @@ void main(void)
 						turn_back();
 						flag_track = 1;
 						obj_count++;
+						flag_obj = 0;
 						flag_put_color = 0;
 						flag_test_color = 0;
 						color = 0;
@@ -219,6 +223,7 @@ void main(void)
 						turn_back();
 						flag_track = 1;
 						obj_count++;
+						flag_obj = 0;
 						flag_put_color = 0;
 						flag_test_color = 0;
 						color = 0;
@@ -456,7 +461,7 @@ void main(void)
 				step = 0;
 				switch (color)
 				{
-					case YELLOW:Fast_forward(15);turn_right_90();break;
+					case YELLOW:Fast_forward(17);turn_right_90();break;
 					case WHITE:Fast_forward(20);turn_right_45();break;
 					case RED:Fast_forward(15);break;
 					case BLACK:Fast_forward(18);turn_left_45();break;
@@ -464,7 +469,7 @@ void main(void)
 				}
 				if(obj_count == 3)
 				{
-					turn_custom(1400, 1400, 28);
+					turn_left_90();
 					flag_turn_r = 1;
 				}
 				color = 0;
@@ -648,16 +653,16 @@ void main(void)
 					step = 0;
 					switch (color)
 					{
-						case YELLOW:Fast_forward(14);turn_right_90();break;
+						case YELLOW:Fast_forward(18);turn_right_90();break;
 						case WHITE:Fast_forward(20);turn_right_45();break;
 						case RED:Fast_forward(14);break;
 						case BLACK:Fast_forward(18);turn_left_45();break;
-						case BLUE:Fast_forward(14);turn_left_90();break;
+						case BLUE:Fast_forward(15);turn_left_90();break;
 					}
 					color = 0;
 					if(obj_count == 3)
 					{
-						turn_custom(1400, 1400, 28);
+						turn_left_90();
 						flag_turn_r = 1;
 						break;
 					}
@@ -678,7 +683,6 @@ void main(void)
 	ii = 0;
 	step = 0;
 
-	flag_turn_r = 1;
 	while(1)
 	{
 		// 循迹
@@ -695,7 +699,7 @@ void main(void)
 				InitTimer();  //定时器初始化
 				dis = GetSonarDis(); //启动超声波
 				turn_r(1530,1530); //微转动
-				if(dis < 35)
+				if(dis < 32)
 				{
 					turn_r_count = i;
 					if(black_white_count > 5)  //有几次次检测到物块，则前进80步，取下物块。
@@ -803,7 +807,7 @@ void main(void)
 				if ((qtis_color == 48 || qtis_color == 16 || qtis_color == 32) && color != 0 && flag_put_color == 1)
 				{
 					flag_track = 0;
-					Fast_forward(12);
+					Fast_forward(11);
 					stop();
 					back(30);
 					turn_back();
@@ -981,7 +985,7 @@ void main(void)
 			}
 		}
 
-		if(obj_count == 2 && step > 195 && color == 0)
+		if(obj_count == 2 && step > 185 && color == 0)
 		{
 			step = 0;
 			stop();
@@ -1004,10 +1008,10 @@ void tracking(void)
 	{
 		case 1:step++;turn(1550,1550);break;	  //大幅向右转
 		case 2:step++;break; 	 
-		case 3:step++;turn(1550,1500);break;	  //小幅向右转
+		case 3:step++;turn(1540,1500);break;	  //小幅向右转
 		case 8:step++;turn(1450,1450);break;	  //大幅向左转
 		case 4:step++;break;
-		case 12:step++;turn(1500,1450);break;	  //小幅向左转
+		case 12:step++;turn(1500,1460);break;	  //小幅向左转
 		case 5:step++;break;
 		case 6:step++;break;
 		case 7:step++;break;
@@ -1017,4 +1021,3 @@ void tracking(void)
 		case 15:Fast_forward(6);break; 	  //向前2小步			
 	}
 }
-

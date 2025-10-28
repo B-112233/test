@@ -275,7 +275,7 @@ void turn_r(unsigned int left,unsigned int right) //ת��
 void turn_back()	//��ת 
 {
 	unsigned int i;
-	for(i=0;i<69;i++)		  
+	for(i=0;i<67;i++)		  
 	{
 		right_moter=1;
 		delay_nus(1440);

@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "ultrasonic.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "motor.h": "c",
+        "boebot.h": "c"
     }
 }
